@@ -13,7 +13,7 @@ export default function Home() {
     <div className="w-full flex flex-col items-center justify-center gap-4">
       <section
         id="intro"
-        className="container mx-auto w-full py-24 lg:py-48 px-6 lg:px-12"
+        className="container mx-auto w-full py-24 lg:py-48 px-6 lg:px-12 min-h-dvh flex items-center justify-center"
       >
         <IntroSection />
       </section>

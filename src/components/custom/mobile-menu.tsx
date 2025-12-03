@@ -5,12 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Mail, Phone, Linkedin, Github, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { motion, AnimatePresence } from "motion/react";
 import { Button } from "../ui/button";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetDescription,
 } from "../ui/sheet";
 
 const sections = [
@@ -55,22 +57,32 @@ export function MobileMenu() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       {/* Top bar trigger (only visible when sheet is closed) */}
-      {!open && (
-        <div className="fixed top-0 left-0 right-0 bg-background flex justify-between items-center p-4 z-50 lg:hidden">
-          <Image
-            src="/images/weblogo.svg"
-            alt="Nomeon logo"
-            width={110}
-            height={32}
-            className="z-40 flex h-6 w-auto brightness-0 dark:invert lg:hidden"
-          />
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Menu className="h-4 w-4" />
-            </Button>
-          </SheetTrigger>
-        </div>
-      )}
+      <AnimatePresence>
+        {!open && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed top-0 left-0 right-0 bg-background flex justify-between items-center p-4 z-50 lg:hidden"
+          >
+            <motion.div>
+              <Image
+                src="/images/weblogo.svg"
+                alt="Nomeon logo"
+                width={110}
+                height={32}
+                className="z-40 flex h-6 w-auto brightness-0 dark:invert lg:hidden"
+              />
+            </motion.div>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Menu className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <SheetContent
         side="right"
@@ -87,6 +99,9 @@ export function MobileMenu() {
               <X className="h-4 w-4" />
             </Button>
           </SheetClose>
+          <SheetDescription className="sr-only">
+            Mobile navigation menu
+          </SheetDescription>
 
           {/* Content */}
           <div className="flex h-full flex-col gap-8 px-6 py-6 pt-6">
