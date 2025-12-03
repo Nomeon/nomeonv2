@@ -5,7 +5,7 @@ interface RateLimitResult {
   response?: NextResponse;
 }
 
-export async function applyRateLimit(): Promise<RateLimitResult> {
+export async function applyRateLimit(key: string): Promise<RateLimitResult> {
   // In development, always allow requests
   if (process.env.NODE_ENV === 'development') {
     return { allowed: true };
@@ -13,5 +13,6 @@ export async function applyRateLimit(): Promise<RateLimitResult> {
 
   // In production, you would implement proper rate limiting
   // For now, just allow all requests
+  console.log(`Rate limiting check for key: ${key}`);
   return { allowed: true };
 }
