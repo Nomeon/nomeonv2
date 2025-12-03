@@ -34,11 +34,9 @@ const buttonVariants = cva(
         outline: `
           bg-background text-foreground
           border border-foreground
-          shadow-[2px_2px_0_0_rgba(0,0,0,0.75)]
-          dark:shadow-[2px_2px_0_0_rgba(255,255,255,0.75)]
+          shadow-[2px_2px_0_0_var(--primary)]
           hover:-translate-x-[1px] hover:-translate-y-[1px]
-          hover:shadow-[3px_3px_0_0_rgba(0,0,0,0.9)]
-          dark:hover:shadow-[3px_3px_0_0_rgba(255,255,255,0.9)]
+          hover:shadow-[3px_3px_0_0_var(--primary)]          
           active:translate-x-0 active:translate-y-0 active:shadow-none
           dark:bg-background/40
         `,
