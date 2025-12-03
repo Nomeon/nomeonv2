@@ -112,8 +112,8 @@ export function TopSpine() {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
 
   return (
-    <div className="fixed top-0 py-4 left-0 right-0 z-40 hidden lg:block bg-background">
-      <div className="container mx-auto relative">
+    <div className="fixed mx-48 top-0 py-4 left-0 right-0 z-40 hidden lg:block bg-background">
+      <div className="container relative mx-auto">
         {/* main spine line within container */}
         <div className="absolute inset-x-0 top-1/2 h-px bg-border pointer-events-none" />
 
@@ -122,7 +122,7 @@ export function TopSpine() {
 
         {/* content on top of the line */}
         <div className="relative h-8">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-8 bg-background ml-2.5">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-8 bg-background ml-5">
             <Link
               href="/"
               aria-label="Nomeon home"
@@ -140,27 +140,37 @@ export function TopSpine() {
           </div>
 
           {/* right-side mode toggle */}
-          <button
-            type="button"
-            aria-label="Toggle color mode"
-            onClick={toggleTheme}
-            className="
-              absolute right-0 top-1/2 -translate-y-1/2
-              flex items-center
-              text-muted-foreground hover:text-foreground
-              transition-colors group
-              cursor-pointer
-            "
-          >
-            <div className="w-10 bg-background pl-2.5">
-              <div className="relative h-5 w-5">
-                <Sun className="absolute inset-0 h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <Moon className="absolute inset-0 h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center">
+            <button
+              type="button"
+              aria-label="Toggle color mode"
+              onClick={toggleTheme}
+              className="flex items-center
+                text-muted-foreground hover:text-foreground
+                transition-colors group
+                cursor-pointer
+              "
+            >
+              <div className="bg-background w-8 flex items-center justify-center">
+                <div className="relative h-5 w-5">
+                  <Sun className="absolute inset-0 h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+                  <Moon className="absolute inset-0 h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                </div>
               </div>
+            </button>
+            <div className="bg-background w-8 flex items-center justify-center ml-2 mr-1">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label="Toggle color mode"
+                className="h-5 w-5 text-primary cursor-pointer hover:text-foreground text-center align-middle font-baumans text-md mb-0.5"
+              >
+                NL
+              </button>
             </div>
             {/* closing line segment */}
-            <span className="h-4 w-px bg-muted-foreground group-hover:bg-foreground mr-2" />
-          </button>
+            <span className="h-4 w-px bg-muted-foreground group-hover:bg-foreground mr-2 ml-2" />
+          </div>
         </div>
       </div>
     </div>

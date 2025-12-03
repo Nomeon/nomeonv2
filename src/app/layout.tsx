@@ -40,7 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {/* Global layout wrapper */}
-          <div className="relative min-h-screen">
+          <div className="relative">
             <SectionSpine />
             <SocialSpine />
             <TopSpine />

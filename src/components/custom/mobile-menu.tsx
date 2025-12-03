@@ -3,11 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Mail, Phone, Linkedin, Github, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
-
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "../ui/sheet";
 
 const sections = [
   { index: "00", label: "Intro", href: "#intro" },
@@ -49,10 +53,10 @@ export function MobileMenu() {
   };
 
   return (
-    <>
-      {/* Trigger button */}
+    <Sheet open={open} onOpenChange={setOpen}>
+      {/* Top bar trigger (only visible when sheet is closed) */}
       {!open && (
-        <div className="fixed top-0 left-0 w-full bg-background flex justify-between items-center p-4 z-50 lg:hidden">
+        <div className="fixed top-0 left-0 right-0 bg-background flex justify-between items-center p-4 z-50 lg:hidden">
           <Image
             src="/images/weblogo.svg"
             alt="Nomeon logo"
@@ -60,145 +64,161 @@ export function MobileMenu() {
             height={32}
             className="z-40 flex h-6 w-auto brightness-0 dark:invert lg:hidden"
           />
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setOpen(true)}
-          >
-            <Menu className="h-4 w-4" />
-          </Button>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </SheetTrigger>
         </div>
       )}
 
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Scrim */}
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/40 lg:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-            />
-
-            {/* Drawer */}
-            <motion.aside
-              className="fixed inset-y-0 right-0 z-50 w-[80vw] max-w-sm bg-background/95 border-l border-border backdrop-blur-sm lg:hidden"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 30 }}
+      <SheetContent
+        side="right"
+        className="w-[80vw] max-w-sm bg-background/95 border-l border-border backdrop-blur-sm lg:hidden p-0"
+      >
+        {/* Close button */}
+        <div className="relative h-full">
+          <SheetClose asChild>
+            <Button
+              className="absolute top-4 right-4"
+              variant="outline"
+              size="icon"
             >
-              {/* Close button */}
-              <Button 
-                className="absolute top-4 right-4"
-              variant="outline" size="icon" onClick={() => setOpen(false)}>
-                <X className="h-4 w-4" />
+              <X className="h-4 w-4" />
+            </Button>
+          </SheetClose>
+
+          {/* Content */}
+          <div className="flex h-full flex-col gap-8 px-6 py-6 pt-6">
+            {/* Logo row */}
+            <div className="flex items-center justify-between">
+              <SheetClose asChild>
+                <Link
+                  href="/"
+                  className="flex items-center gap-3"
+                  onClick={handleNavigate}
+                >
+                  <div className="h-7 w-auto brightness-0 dark:invert">
+                    <Image
+                      src="/images/weblogo.svg"
+                      alt="Nomeon logo"
+                      width={110}
+                      height={32}
+                      className="h-7 w-auto"
+                    />
+                  </div>
+                </Link>
+              </SheetClose>
+            </div>
+
+            {/* Sections */}
+            <nav className="flex-1 pt-8">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                Sections
+              </p>
+              <ul className="space-y-4">
+                {sections.map((section) => (
+                  <li key={section.index}>
+                    <SheetClose asChild>
+                      <Link
+                        href={section.href}
+                        onClick={handleNavigate}
+                        className="flex items-baseline justify-between gap-4 border-b border-dashed border-border/70 pb-2"
+                      >
+                        <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                          {section.index}
+                        </span>
+                        <span className="text-sm font-baumans tracking-[0.12em]">
+                          {section.label}
+                        </span>
+                      </Link>
+                    </SheetClose>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Socials */}
+            <div className="pt-4">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                Social
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {socials.map((item) => {
+                  const Icon = item.icon;
+                  const isExternal = item.href.startsWith("http");
+                  return (
+                    <SheetClose asChild key={item.label}>
+                      <Link
+                        href={item.href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className="flex items-center gap-2 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.22em]"
+                        onClick={handleNavigate}
+                      >
+                        <Icon className="h-3 w-3" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </SheetClose>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Theme + Language */}
+            <div className="pt-6">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                Display
+              </p>
+
+              <Button
+                onClick={() =>
+                  setTheme(resolvedTheme === "light" ? "dark" : "light")
+                }
+                className="w-full flex justify-between"
+              >
+                <span>Theme</span>
+                <div className="flex items-center gap-2">
+                  <Sun className="h-4 w-4 dark:hidden" />
+                  <Moon className="h-4 w-4 hidden dark:block" />
+                  <span className="tabular-nums">
+                    {resolvedTheme === "light" ? "Light" : "Dark"}
+                  </span>
+                </div>
               </Button>
 
-              {/* Content */}
-              <div className="flex h-full flex-col gap-8 px-6 py-6 pt-6">
-                {/* Logo row */}
-                <div className="flex items-center justify-between">
-                  <Link
-                    href="/"
-                    className="flex items-center gap-3"
-                    onClick={handleNavigate}
-                  >
-                    <div className="h-7 w-auto brightness-0 dark:invert">
-                      <Image
-                        src="/images/weblogo.svg"
-                        alt="Nomeon logo"
-                        width={110}
-                        height={32}
-                        className="h-7 w-auto"
-                      />
-                    </div>
-                  </Link>
-                </div>
-
-                {/* Sections */}
-                <nav className="flex-1 pt-8">
-                  <p className="mb-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                    Sections
-                  </p>
-                  <ul className="space-y-4">
-                    {sections.map((section) => (
-                      <li key={section.index}>
-                        <Link
-                          href={section.href}
-                          onClick={handleNavigate}
-                          className="flex items-baseline justify-between gap-4 border-b border-dashed border-border/70 pb-2"
-                        >
-                          <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                            {section.index}
-                          </span>
-                          <span className="text-sm font-baumans tracking-[0.12em]">
-                            {section.label}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-
-                {/* Socials */}
-                <div className=" pt-4">
-                  <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                    Social
-                  </p>
-                  <div className="grid grid-cols-2 gap-4">
-                    {socials.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          target={
-                            item.href.startsWith("http") ? "_blank" : undefined
-                          }
-                          rel={
-                            item.href.startsWith("http")
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
-                          className="flex items-center gap-2 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.22em]"
-                        >
-                          <Icon className="h-3 w-3" />
-                          <span>{item.label}</span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                {/* Theme toggle */}
-                <div className="pt-6">
-                  <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                    Display
-                  </p>
-
-                  <Button
-                    onClick={() =>
-                      setTheme(resolvedTheme === "light" ? "dark" : "light")
+              <Button
+                onClick={() =>
+                  setTheme(resolvedTheme === "light" ? "dark" : "light")
+                }
+                className="w-full flex justify-between mt-4"
+              >
+                <span>Language</span>
+                <div className="flex items-center gap-2">
+                  <Image
+                    className="h-4 w-4 mb-1"
+                    width={16}
+                    height={16}
+                    alt={
+                      resolvedTheme === "light"
+                        ? "Nederlandse vlag"
+                        : "English flag"
                     }
-                    className="w-full flex justify-between"
-                  >
-                    <span>Theme</span>
-                    <div className="flex items-center gap-2">
-                      <Sun className="h-4 w-4 dark:hidden" />
-                      <Moon className="h-4 w-4 hidden dark:block" />
-                      <span className="tabular-nums">
-                        {resolvedTheme === "light" ? "Light" : "Dark"}
-                      </span>
-                    </div>
-                  </Button>
+                    src={
+                      resolvedTheme === "light"
+                        ? "/images/nl.svg"
+                        : "/images/en.svg"
+                    }
+                  />
+                  <span className="tabular-nums">
+                    {resolvedTheme === "light" ? "Nederlands" : "English"}
+                  </span>
                 </div>
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

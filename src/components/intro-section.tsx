@@ -37,7 +37,7 @@ export default function IntroSection() {
           looks.
         </p>
 
-        <div className="flex items-center gap-8 pt-2">
+        <div className="grid grid-cols-2 gap-8 pt-2">
           <Button
             onMouseEnter={() => setIsHoveredContact(true)}
             onMouseLeave={() => setIsHoveredContact(false)}
@@ -69,7 +69,7 @@ export default function IntroSection() {
                 Book a call
               </TextRoll>
           </Button>
-          <span className="text-[11px] uppercase tracking-[0.26em] text-muted-foreground">
+          <span className="text-[11px] uppercase text-center col-span-2 tracking-[0.26em] text-muted-foreground">
             Working across NL / DE
           </span>
         </div>
