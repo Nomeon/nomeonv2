@@ -7,18 +7,22 @@ import { useTheme } from "next-themes";
 import { useActiveSection } from "@/hooks/use-active-section";
 
 const SECTIONS = [
-  { id: "intro",    label: "Intro" },
-  { id: "about",    label: "Background" },
+  { id: "intro", label: "Intro" },
+  { id: "about", label: "Background" },
   { id: "projects", label: "Projects" },
-  { id: "services",     label: "Services" },
-  { id: "contact",  label: "Contact" },
+  { id: "services", label: "Services" },
+  { id: "contact", label: "Contact" },
 ];
 
 const SOCIALS = [
-  { label: "Email",    href: "mailto:stijn@nomeon.nl",      Icon: Mail },
-  { label: "Phone",    href: "tel:+31625187362",           Icon: Phone },
-  { label: "LinkedIn", href: "https://www.linkedin.com/",  Icon: Linkedin },
-  { label: "GitHub",   href: "https://github.com/",        Icon: Github },
+  { label: "Email", href: "mailto:stijn@nomeon.nl", Icon: Mail },
+  { label: "Phone", href: "tel:+31640267494", Icon: Phone },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/stijn-nijhuis",
+    Icon: Linkedin,
+  },
+  { label: "GitHub", href: "https://github.com/Nomeon", Icon: Github },
 ];
 
 export function SectionSpine() {
@@ -58,9 +62,7 @@ export function SectionSpine() {
             />
 
             <span>{String(index).padStart(2, "0")}</span>
-            <span className="text-[9px] tracking-[0.3em]">
-              {section.label}
-            </span>
+            <span className="text-[9px] tracking-[0.3em]">{section.label}</span>
           </button>
         );
       })}
@@ -93,7 +95,10 @@ export function SocialSpine() {
               group-hover:w-4 group-hover:bg-foreground
             "
           />
-          <Icon className="h-4 w-4 group-hover:text-primary" strokeWidth={1.6} />
+          <Icon
+            className="h-4 w-4 group-hover:text-primary"
+            strokeWidth={1.6}
+          />
         </a>
       ))}
     </div>

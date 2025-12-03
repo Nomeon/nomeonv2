@@ -23,12 +23,12 @@ const calculateOffsetManually = (timezone: string, date: Date): string => {
     const targetTime = new Date(
       date.toLocaleString('en-US', { timeZone: timezone })
     );
-    const offsetMinutes = (utc - targetTime.getTime()) / 60000;
+    const offset = (utc - targetTime.getTime()) / 60000;
 
     // Convert to hours and minutes
-    const hours = Math.floor(Math.abs(offsetMinutes) / 60);
-    const minutes = Math.abs(offsetMinutes) % 60;
-    const sign = offsetMinutes <= 0 ? '+' : '-';
+    const hours = Math.floor(Math.abs(offset) / 60);
+    const minutes = Math.abs(offset) % 60;
+    const sign = offset <= 0 ? '+' : '-';
 
     // Format as GMT±HH:MM
     return `GMT${sign}${hours.toString().padStart(2, '0')}:${minutes
@@ -146,7 +146,7 @@ const sortTimezones = (timezones: TimezoneOption[]): TimezoneOption[] => {
       // If same offset, sort alphabetically by city
       return a.label.localeCompare(b.label);
     })
-    .map(({ offsetMinutes, ...tz }) => tz); // Remove the temporary offsetMinutes property
+    .map(({ ...tz }) => tz); // Remove the temporary offsetMinutes property
 };
 
 // Get available timezones dynamically

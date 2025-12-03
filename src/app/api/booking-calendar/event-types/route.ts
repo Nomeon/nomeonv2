@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   if (!process.env.CALCOM_API_KEY) {
     return NextResponse.json(
       { error: 'Cal.com API key not configured' },

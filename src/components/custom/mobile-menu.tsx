@@ -4,7 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X, Mail, Phone, Linkedin, Github } from "lucide-react";
+import { Menu, X, Mail, Phone, Linkedin, Github, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "../ui/button";
+
 
 const sections = [
   { index: "00", label: "Intro", href: "#intro" },
@@ -17,28 +20,29 @@ const sections = [
 const socials = [
   {
     label: "Email",
-    href: "mailto:info@nomeon.nl",
+    href: "mailto:stijn@nomeon.nl",
     icon: Mail,
   },
   {
     label: "Phone",
-    href: "tel:+31000000000",
+    href: "tel:+31640267494",
     icon: Phone,
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/",
+    href: "https://www.linkedin.com/in/stijn-nijhuis",
     icon: Linkedin,
   },
   {
     label: "GitHub",
-    href: "https://github.com/",
+    href: "https://github.com/Nomeon",
     icon: Github,
   },
 ];
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const handleNavigate = () => {
     setOpen(false);
@@ -48,23 +52,22 @@ export function MobileMenu() {
     <>
       {/* Trigger button */}
       {!open && (
-      <div className="fixed top-0 left-0 w-full bg-background flex justify-between items-center p-4 z-50 lg:hidden">
-        <Image
-          src="/images/weblogo.svg"
-          alt="Nomeon logo"
-          width={110}
-          height={32}
-          className="z-40 flex h-6 w-auto brightness-0 dark:invert lg:hidden"
-        />
-        <button
-          type="button"
-          aria-label="Open navigation"
-          className="flex h-9 w-9 items-center justify-center border border-border bg-background/90 backdrop-blur-sm"
-          onClick={() => setOpen(true)}
-        >
-          <Menu className="h-4 w-4" />
-        </button>
-      </div>
+        <div className="fixed top-0 left-0 w-full bg-background flex justify-between items-center p-4 z-50 lg:hidden">
+          <Image
+            src="/images/weblogo.svg"
+            alt="Nomeon logo"
+            width={110}
+            height={32}
+            className="z-40 flex h-6 w-auto brightness-0 dark:invert lg:hidden"
+          />
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setOpen(true)}
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
+        </div>
       )}
 
       <AnimatePresence>
@@ -88,14 +91,11 @@ export function MobileMenu() {
               transition={{ type: "spring", stiffness: 260, damping: 30 }}
             >
               {/* Close button */}
-              <button
-                type="button"
-                aria-label="Close navigation"
-                className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center border border-border bg-background/90"
-                onClick={() => setOpen(false)}
-              >
+              <Button 
+                className="absolute top-4 right-4"
+              variant="outline" size="icon" onClick={() => setOpen(false)}>
                 <X className="h-4 w-4" />
-              </button>
+              </Button>
 
               {/* Content */}
               <div className="flex h-full flex-col gap-8 px-6 py-6 pt-6">
@@ -171,6 +171,28 @@ export function MobileMenu() {
                       );
                     })}
                   </div>
+                </div>
+                {/* Theme toggle */}
+                <div className="pt-6">
+                  <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                    Display
+                  </p>
+
+                  <Button
+                    onClick={() =>
+                      setTheme(resolvedTheme === "light" ? "dark" : "light")
+                    }
+                    className="w-full flex justify-between"
+                  >
+                    <span>Theme</span>
+                    <div className="flex items-center gap-2">
+                      <Sun className="h-4 w-4 dark:hidden" />
+                      <Moon className="h-4 w-4 hidden dark:block" />
+                      <span className="tabular-nums">
+                        {resolvedTheme === "light" ? "Light" : "Dark"}
+                      </span>
+                    </div>
+                  </Button>
                 </div>
               </div>
             </motion.aside>

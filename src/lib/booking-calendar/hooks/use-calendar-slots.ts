@@ -94,7 +94,7 @@ export const useCalendarSlots = (
         // Find all slots that fall on this local date
         const slotsForDate: CalcomSlot[] = [];
 
-        Object.entries(monthSlots).forEach(([slotDate, slots]) => {
+        Object.entries(monthSlots).forEach(([, slots]) => {
           if (slots && slots.length > 0) {
             slots.forEach((slot) => {
               const slotLocalDate = getSlotLocalDate(slot.start);
@@ -136,7 +136,7 @@ export const useCalendarSlots = (
           // Cal.com v2 API returns slots directly: { "2025-06-17": [{ "start": "..." }] }
           if (data && typeof data === "object") {
             // Find slots that fall on our selected local date
-            Object.entries(data).forEach(([slotDate, slots]) => {
+            Object.entries(data).forEach(([, slots]) => {
               if (Array.isArray(slots)) {
                 slots.forEach(
                   (slot: {

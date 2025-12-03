@@ -18,7 +18,6 @@ interface BookingSuccessProps {
   userTimezone: string; // User's selected timezone
   onReschedule: () => void;
   onCancel: () => void;
-  onNewBooking: () => void;
   isRescheduled: boolean;
 }
 
@@ -27,7 +26,6 @@ export const BookingSuccess: React.FC<BookingSuccessProps> = ({
   userTimezone,
   onReschedule,
   onCancel,
-  onNewBooking,
   isRescheduled,
 }) => {
   // Format the booking details in user's selected timezone

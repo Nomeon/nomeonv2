@@ -32,16 +32,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   const { monthSlots, availableSlots, loading, fetchMonthSlots, fetchSlots } =
     useCalendarSlots(eventTypeId, hasIntersected);
 
-  // Auto-select today's date (regardless of availability)
-  const autoSelectToday = () => {
-    // Only auto-select if no date is currently selected
-    if (!selectedDate) {
-      const today = new Date();
-      setSelectedDate(today);
-      fetchSlots(today);
-    }
-  };
-
   // Handle date selection
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
@@ -61,24 +51,26 @@ export const Calendar: React.FC<CalendarProps> = ({
     );
   };
 
+  // Extract year and month for dependency tracking
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+
   // Fetch month slots when calendar becomes visible or month changes
   useEffect(() => {
     if (hasIntersected) {
       fetchMonthSlots(currentDate);
     }
-  }, [
-    hasIntersected,
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    eventTypeId,
-    fetchMonthSlots,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasIntersected, currentYear, currentMonth]);
 
   // Auto-select today's date when month slots are loaded
   useEffect(() => {
-    if (Object.keys(monthSlots).length > 0) {
-      autoSelectToday();
+    if (Object.keys(monthSlots).length > 0 && !selectedDate) {
+      const today = new Date();
+      setSelectedDate(today);
+      fetchSlots(today);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [monthSlots]);
 
   // Refresh data when timezone changes
@@ -91,6 +83,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         fetchSlots(selectedDate);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userTimezone]);
 
   return (
