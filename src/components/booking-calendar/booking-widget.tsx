@@ -20,17 +20,11 @@ type BookingStep = 'calendar' | 'form' | 'success' | 'reschedule' | 'cancelled';
 interface BookingWidgetProps {
   eventTypeId: string;
   eventLength?: number; // in minutes, default 30
-  title?: string;
-  description?: string;
-  showHeader?: boolean;
 }
 
 const BookingWidget: React.FC<BookingWidgetProps> = ({
   eventTypeId,
   eventLength = 30,
-  title = 'Schedule a Meeting',
-  description,
-  showHeader = false,
 }) => {
   const [currentStep, setCurrentStep] = useState<BookingStep>('calendar');
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
@@ -212,11 +206,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         <Calendar
           eventTypeId={eventTypeId}
           onSlotSelect={handleSlotSelect}
-          title={title}
-          description={description}
-          showHeader={showHeader}
           userTimezone={userTimezone}
-          onTimezoneChange={setUserTimezone}
         />
       )}
 
@@ -235,11 +225,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         <Calendar
           eventTypeId={eventTypeId}
           onSlotSelect={handleRescheduleSlotSelect}
-          title="Reschedule Meeting"
-          description="Please select a new time for your meeting."
-          showHeader={true}
           userTimezone={userTimezone}
-          onTimezoneChange={setUserTimezone}
         />
       )}
 
@@ -249,7 +235,6 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
           userTimezone={userTimezone}
           onReschedule={handleReschedule}
           onCancel={handleCancel}
-          onNewBooking={handleNewBooking}
           isRescheduled={isRescheduled}
         />
       )}
