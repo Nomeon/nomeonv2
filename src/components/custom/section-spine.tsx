@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import { useMotionValueEvent, useScroll } from "motion/react";
 
 const SECTIONS = [
+  { id: "intro",    label: "Intro" },
   { id: "about",    label: "Background" },
   { id: "projects", label: "Projects" },
   { id: "blog",     label: "Services" },
@@ -110,7 +111,7 @@ export function SectionSpine() {
                 ${isActive ? "w-4 bg-foreground" : "w-2 bg-muted-foreground"}
               `}
             />
-            <span>{String(index + 1).padStart(2, "0")}</span>
+            <span>{String(index).padStart(2, "0")}</span>
             <span className="text-[9px] tracking-[0.3em]">
               {section.label}
             </span>

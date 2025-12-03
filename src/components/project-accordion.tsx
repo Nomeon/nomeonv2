@@ -1,16 +1,11 @@
 import {
   Accordion,
-  AccordionContent,
+  AccordionPanel,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  AlertCircle,
-  Lightbulb,
-  TrendingUp,
-  Code,
-  CheckCircle,
-} from "lucide-react";
+} from "@/components/animate-ui/components/base/accordion";
+import { TextRoll } from "./ui/text-roll";
+import { useState } from "react";
 
 // Project data structure
 const projectsData = [
@@ -37,6 +32,7 @@ const projectsData = [
   {
     id: "2",
     title: "Koopmans Bouwgroep",
+    year: 2022,
     image: null,
     challenge:
       "The company struggled with a wildly inefficient workflow: calculators had to perform the same calculation twice just to get ERP-compatible output. IBIS Trad, the estimating software, provided almost no flexibility in how data could be exported, while the ERP system expected a very rigid and outdated format. Because the two systems couldn't speak the same language, every project required manual rework, duplicated effort, and endless copy-pasting. This not only slowed down the calculation team, but also increased the risk of inconsistent data and costly mistakes.",
@@ -52,6 +48,7 @@ const projectsData = [
   {
     id: "3",
     title: "Nijhuis Rioolreiniging",
+    year: 2022,
     image: null,
     challenge:
       "Nijhuis Rioolreiniging had no streamlined way to manage their container rentals. Availability, rentals, returns, and pickup moments were tracked manually across different places, making it difficult for the team to maintain an accurate overview. Without a central system, mistakes like double-bookings, forgotten pickups, or unclear status updates were common, slowing down operations and reducing clarity between team members.",
@@ -71,6 +68,7 @@ const projectsData = [
     id: "4",
     title: "Elan Interim Advies",
     image: null,
+    year: 2022,
     challenge:
       "Elan Interim Advies needed a modern and professional online presence that clearly communicated their services and expertise. Their existing branding wasn't fully translated to the web, and there was no central place for potential clients to learn about their work or get in touch easily. The goal was to build a clean, trustworthy website that feels fast, personal, and well-structured across all devices.",
     solution:
@@ -87,6 +85,7 @@ const projectsData = [
     id: "5",
     title: "Vosteq",
     image: null,
+    year: 2022,
     challenge:
       "Vosteq's previous website was built on WordPress and suffered from slow loading times, poor performance optimizations, and limited flexibility. The company needed a fast, modern, and scalable site that could support both static pages and a dynamic blog. The design was created by Catapult, but the implementation required tight collaboration to ensure the final result matched the visual direction while dramatically improving speed and maintainability.",
     solution:
@@ -104,6 +103,7 @@ const projectsData = [
     id: "6",
     title: "Voorbij Amsterdam",
     image: null,
+    year: 2022,
     challenge:
       "Voorbij Amsterdam wanted to optimize their production sequence, but the complexity of their workflow made manual experimentation nearly impossible. Many variables influence the production order, and inefficient scheduling leads to delays, idle machines, or unnecessary bottlenecks. Without a structured way to simulate different scenarios, finding the most efficient production strategy was basically guesswork.",
     solution:
@@ -120,6 +120,7 @@ const projectsData = [
     id: "7",
     title: "KiwiConnect",
     image: null,
+    year: 2022,
     challenge:
       "Many companies struggle to efficiently screen resumes, match candidates to job openings, and create a consistent hiring process. Traditional ATS systems are often outdated, rigid, and offer limited insight into candidate potential. KiwiConnect was created to solve this problem from the ground up: a modern, fast, and intelligent platform capable of analyzing resumes, matching them to jobs, and generating insights that help companies make better hiring decisions. As the solo developer, I was responsible for turning a business idea into a fully functioning SaaS product.",
     solution:
@@ -225,10 +226,7 @@ const renderProjectContent = (project: (typeof projectsData)[0]) => {
 
           <ul className="space-y-1.5">
             {project.benefits.map((benefit, i) => (
-              <li
-                key={i}
-                className="flex gap-3 text-sm text-muted-foreground"
-              >
+              <li key={i} className="flex gap-3 text-sm text-muted-foreground">
                 <span className="mt-2.5 h-0.5 w-6 bg-foreground shrink-0" />
                 <span>{benefit}</span>
               </li>
@@ -268,34 +266,52 @@ const items = projectsData.map((project) => ({
   content: renderProjectContent(project),
 }));
 
+function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <AccordionItem
+      value={item.id}
+      key={item.id}
+      className="last:border-b"
+    >
+      <AccordionTrigger
+        data-magnetic="true"
+        className="text-left lg:pl-6 md:pl-14 mt-4 overflow-hidden text-foreground/40 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-panel-open:text-primary [&>svg]:hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="flex flex-1 items-start gap-4">
+          <p className="text-xs font-baumans">{item.id}</p>
+          <h1
+            className={`font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl`}
+          >
+            <TextRoll
+              duration={0.2}
+              getEnterDelay={() => 0.1}
+              getExitDelay={() => 0.2}
+              transition={{ ease: "easeInOut" }}
+              hovered={isHovered}
+            >
+              {item.title}
+            </TextRoll>
+          </h1>
+        </div>
+      </AccordionTrigger>
+
+      <AccordionPanel className="text-muted-foreground pb-6 pl-6 md:px-20">
+        {item.content}
+      </AccordionPanel>
+    </AccordionItem>
+  );
+}
+
 export default function ProjectAccordion() {
   return (
     <div className="w-full mx-auto">
-      <Accordion type="single" defaultValue="1" collapsible className="w-full">
+      <Accordion multiple={false} className="w-full">
         {items.map((item) => (
-          <AccordionItem
-            value={item.id}
-            key={item.id}
-            className="last:border-b"
-          >
-            <AccordionTrigger
-              data-magnetic="true"
-              className="transition-all text-left lg:pl-6 md:pl-14 mt-4 overflow-hidden text-foreground/40 duration-200 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-[state=open]:space-y-0 data-[state=open]:text-primary [&>svg]:hidden"
-            >
-              <div className="flex flex-1 items-start gap-4">
-                <p className="text-xs font-baumans">{item.id}</p>
-                <h1
-                  className={`font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl`}
-                >
-                  {item.title}
-                </h1>
-              </div>
-            </AccordionTrigger>
-
-            <AccordionContent className="text-muted-foreground pb-6 pl-6 md:px-20">
-              {item.content}
-            </AccordionContent>
-          </AccordionItem>
+          <AccordionItemWithHover key={item.id} item={item} />
         ))}
       </Accordion>
     </div>

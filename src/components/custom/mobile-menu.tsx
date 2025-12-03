@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Mail, Phone, Linkedin, Github } from "lucide-react";
 
 const sections = [
+  { index: "00", label: "Intro", href: "#intro" },
   { index: "01", label: "Background", href: "#about" },
   { index: "02", label: "Projects", href: "#projects" },
   { index: "03", label: "Services", href: "#services" },
