@@ -309,7 +309,7 @@ function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
 export default function ProjectAccordion() {
   return (
     <div className="w-full mx-auto">
-      <Accordion multiple={false} className="w-full">
+      <Accordion multiple={false} defaultValue={["1"]} className="w-full">
         {items.map((item) => (
           <AccordionItemWithHover key={item.id} item={item} />
         ))}

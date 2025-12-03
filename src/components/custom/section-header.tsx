@@ -16,7 +16,7 @@ export default function SectionHeader({
   description,
 }: SectionHeaderProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 py-8">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         {/* Left side */}
         <div className="flex flex-col gap-2">

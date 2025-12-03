@@ -2,16 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Github, Linkedin, Mail, Moon, Phone, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useMotionValueEvent, useScroll } from "motion/react";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const SECTIONS = [
   { id: "intro",    label: "Intro" },
   { id: "about",    label: "Background" },
   { id: "projects", label: "Projects" },
-  { id: "blog",     label: "Services" },
+  { id: "services",     label: "Services" },
   { id: "contact",  label: "Contact" },
 ];
 
@@ -22,88 +21,34 @@ const SOCIALS = [
   { label: "GitHub",   href: "https://github.com/",        Icon: Github },
 ];
 
-type SectionBounds = Record<string, { top: number; bottom: number }>;
-
-// pick the section whose midpoint sits ~35% down the viewport
-const VIEWPORT_FOCUS = 0.35;
-
 export function SectionSpine() {
-  const [activeId, setActiveId] = useState<string>("about");
-  const { scrollY } = useScroll();
-  const sectionBoundsRef = useRef<SectionBounds>({});
-
-  const measureSections = useCallback(() => {
-    const nextBounds: SectionBounds = {};
-
-    SECTIONS.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      const top = window.scrollY + rect.top;
-      nextBounds[id] = { top, bottom: top + rect.height };
-    });
-
-    sectionBoundsRef.current = nextBounds;
-  }, []);
-
-  useEffect(() => {
-    measureSections();
-    window.addEventListener("resize", measureSections);
-
-    return () => window.removeEventListener("resize", measureSections);
-  }, [measureSections]);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const focusY = latest + window.innerHeight * VIEWPORT_FOCUS;
-    const bounds = sectionBoundsRef.current;
-
-    let nextId: string | null = null;
-    for (const section of SECTIONS) {
-      const entry = bounds[section.id];
-      if (!entry) continue;
-      if (focusY >= entry.top && focusY < entry.bottom) {
-        nextId = section.id;
-        break;
-      }
-    }
-
-    if (nextId) {
-      setActiveId((prev) => (prev === nextId ? prev : nextId));
-    }
-  });
+  const activeId = useActiveSection(SECTIONS.map((s) => s.id));
 
   function scrollToSection(id: string) {
     const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (
-    // hide on small screens, center vertically
     <div className="fixed left-4 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-3 z-40">
-      {/* spine line */}
+      {/* vertical spine */}
       <div className="absolute left-2 top-0 bottom-0 w-px bg-border" />
 
       {SECTIONS.map((section, index) => {
         const isActive = activeId === section.id;
 
         return (
-          <a
+          <button
             key={section.id}
-            href={`#${section.id}`}
-            onClick={(event) => {
-              event.preventDefault();
-              scrollToSection(section.id);
-            }}
+            onClick={() => scrollToSection(section.id)}
             className={`
-              relative pl-6 flex flex-col items-start gap-0.5
+              relative pl-6 text-left flex flex-col items-start gap-0.5
               text-[10px] uppercase tracking-[0.25em]
-              transition-colors
+              transition-colors cursor-pointer
               ${isActive ? "text-primary" : "text-muted-foreground"}
             `}
           >
-            {/* little tick on the spine */}
+            {/* tick mark */}
             <span
               className={`
                 absolute left-0 top-1.5 h-px
@@ -111,18 +56,17 @@ export function SectionSpine() {
                 ${isActive ? "w-4 bg-foreground" : "w-2 bg-muted-foreground"}
               `}
             />
+
             <span>{String(index).padStart(2, "0")}</span>
             <span className="text-[9px] tracking-[0.3em]">
               {section.label}
             </span>
-          </a>
+          </button>
         );
       })}
     </div>
   );
 }
-
-
 
 export function SocialSpine() {
   return (
@@ -173,18 +117,18 @@ export function TopSpine() {
 
         {/* content on top of the line */}
         <div className="relative h-8">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-26 bg-background ml-2.5">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-8 bg-background ml-2.5">
             <Link
               href="/"
               aria-label="Nomeon home"
               className="absolute inset-0 flex items-center justify-center"
             >
               <Image
-                src="/images/weblogo.svg"
+                src="/images/favicon.svg"
                 alt="Nomeon logo"
-                width={110}
+                width={32}
                 height={32}
-                className="h-5 w-auto brightness-0 dark:invert"
+                className="h-4.5 w-auto brightness-0 dark:invert"
                 priority
               />
             </Link>

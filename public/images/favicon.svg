@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="319.1626"
+   height="319.47632"
+   viewBox="0 0 319.1626 319.47632"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Laag 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-378.35925,-389.37622)">
+    <path
+       id="path1"
+       style="fill:#000000;stroke-width:1.45186"
+       d="m 378.35926,389.37622 v 23.99412 23.99413 h 49.32489 49.32215 l 49.50924,49.51196 c 27.22921,27.23163 49.76589,49.51466 50.0813,49.51466 0.31541,0 0.57206,-15.16867 0.57206,-33.70565 v -33.70295 l -39.79771,-39.80313 -39.79501,-39.80314 h -59.60845 z m 198.04781,0 v 23.99412 23.99413 h 36.56325 36.56325 v 96.16359 96.16358 l 23.99413,-23.98328 23.99415,-23.986 v -96.17442 -96.17172 h -60.5574 z m -150.6262,79.98314 c -0.3117,0 -11.10896,10.53654 -23.99411,23.41664 l -23.4275,23.41935 v 96.15546 96.15273 l 13.13849,0.24131 c 7.22685,0.13255 13.82699,0.14407 14.66488,0.0271 0.83789,-0.11676 22.00449,-0.21676 47.03663,-0.22234 l 45.51291,-0.0111 V 684.5446 660.55046 H 462.5312 426.34753 v -95.59694 c 0,-52.57798 -0.25494,-95.59423 -0.56666,-95.59423 z m 72.9313,91.79042 v 34.27228 34.27501 l 39.41544,39.42086 39.41816,39.42086 h 59.98802 59.98806 V 684.54466 660.55053 H 647.8228 598.12106 l -49.70444,-49.69902 z"
+       inkscape:export-filename="logo.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
