@@ -46,7 +46,7 @@ export default function RootLayout({
             <TopSpine />
             <MobileMenu />
             <div className="flex min-h-dvh flex-col px-4 lg:px-48">
-              <main className="flex-1 font-noto pt-16">
+              <main className="flex-1 font-noto">
                 {children}
               </main>
               <Footer />
