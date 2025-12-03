@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Booker } from "@calcom/atoms";
 import { useState } from "react";
 import { TextRoll } from "./ui/text-roll";
+import BookingWidget from "@/components/booking-calendar/booking-widget";
 
 export default function ContactSection() {
   const [isHovered, setIsHovered] = useState(false);
@@ -92,7 +92,7 @@ export default function ContactSection() {
                   className="min-h-[120px] resize-vertical rounded-none border-border"
                 />
                 <FieldDescription className="text-[11px] text-muted-foreground">
-                  A short description is enough; I'll reply personally.
+                  A short description is enough; I&apos;ll reply personally.
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -139,7 +139,15 @@ export default function ContactSection() {
             </p>
           </div>
 
-          <div className="mx-auto"></div>
+          <div className="mx-auto">
+            <BookingWidget
+              eventTypeId={process.env.NEXT_PUBLIC_CALCOM_EVENT_TYPE_ID || ""}
+              eventLength={30}
+              title="Schedule a meeting"
+              description="Choose a time that works best for you. We'll send you a confirmation email with meeting details."
+              showHeader={false}
+            />
+          </div>
         </div>
       </div>
     </div>

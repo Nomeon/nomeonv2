@@ -277,14 +277,14 @@ function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
     >
       <AccordionTrigger
         data-magnetic="true"
-        className="text-left lg:pl-6 md:pl-14 mt-4 overflow-hidden text-foreground/40 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-panel-open:text-primary [&>svg]:hidden"
+        className="text-left lg:pl-6 md:pl-14 mt-4 text-foreground/40 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-panel-open:text-primary [&>svg]:hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="flex flex-1 items-start gap-4">
           <p className="text-xs font-baumans">{item.id}</p>
           <h1
-            className={`font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl`}
+            className="font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl"
           >
             <TextRoll
               duration={0.2}
