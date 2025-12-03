@@ -152,9 +152,9 @@ const renderProjectContent = (project: (typeof projectsData)[0]) => {
     : [project.challenge];
 
   return (
-    <div className="relative flex flex-col gap-6 border-t border-border pt-8 pl-12">
+    <div className="relative flex flex-col gap-6 border-t border-border pt-8 lg:pl-12">
       {/* META RAIL */}
-      <div className="absolute left-0 top-8 flex flex-col items-start gap-1 text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
+      <div className="absolute left-0 top-8 flex flex-col items-start gap-1 text-[10px] tracking-[0.25em] uppercase text-muted-foreground max-lg:hidden">
         <span>{String(project.id).padStart(2, "0")}</span>
         <span className="w-6 h-px bg-foreground" />
         {project.year && <span>{project.year}</span>}
@@ -162,7 +162,7 @@ const renderProjectContent = (project: (typeof projectsData)[0]) => {
 
       {/* Optional image / placeholder */}
       {project.image && (
-        <div className="w-full border border-border aspect-video flex items-center justify-center font-baumans text-2xl tracking-wide">
+        <div className="w-full border border-border aspect-video flex items-center justify-center font-baumans text-lg lg:text-2xl tracking-wide">
           {project.title}
         </div>
       )}
@@ -229,7 +229,7 @@ const renderProjectContent = (project: (typeof projectsData)[0]) => {
                 key={i}
                 className="flex gap-3 text-sm text-muted-foreground"
               >
-                <span className="mt-2.5 h-0.5 w-10 bg-foreground shrink-0" />
+                <span className="mt-2.5 h-0.5 w-6 bg-foreground shrink-0" />
                 <span>{benefit}</span>
               </li>
             ))}
@@ -280,12 +280,12 @@ export default function ProjectAccordion() {
           >
             <AccordionTrigger
               data-magnetic="true"
-              className="transition-all text-left pl-6 md:pl-14 mt-4 overflow-hidden text-foreground/40 duration-200 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-[state=open]:space-y-0 data-[state=open]:text-primary [&>svg]:hidden"
+              className="transition-all text-left lg:pl-6 md:pl-14 mt-4 overflow-hidden text-foreground/40 duration-200 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-[state=open]:space-y-0 data-[state=open]:text-primary [&>svg]:hidden"
             >
               <div className="flex flex-1 items-start gap-4">
                 <p className="text-xs font-baumans">{item.id}</p>
                 <h1
-                  className={`font-baumans uppercase relative text-center text-3xl md:text-5xl`}
+                  className={`font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl`}
                 >
                   {item.title}
                 </h1>

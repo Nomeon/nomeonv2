@@ -172,7 +172,7 @@ export function TopSpine() {
 
         {/* content on top of the line */}
         <div className="relative h-8">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-26 bg-background ml-4">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-26 bg-background ml-2.5">
             <Link
               href="/"
               aria-label="Nomeon home"
