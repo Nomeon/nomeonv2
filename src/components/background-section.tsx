@@ -21,9 +21,9 @@ export default function BackgroundSection() {
           description="I design and build tools that remove friction from real-world processes: translating business needs into clean, reliable software that people actually use."
         />
 
-        <div className="flex flex-col lg:flex-row w-full gap-16">
+        <div className="flex flex-col xl:flex-row w-full gap-16">
           {/* Blueprint content box (left) */}
-          <div className="relative border border-border px-10 py-14 lg:w-1/2 bg-background/85 backdrop-blur-sm">
+          <div className="relative border border-border px-10 py-14 xl:w-1/2 bg-background/85 backdrop-blur-sm">
             {/* Corner markers */}
             <div className="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-border" />
             <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-border" />
@@ -84,7 +84,7 @@ export default function BackgroundSection() {
 
           {/* Pixelated canvas placeholder (right) */}
           {/* Operator Spec Sheet (right) */}
-          <div className="relative lg:w-1/2 border border-border bg-background/85 backdrop-blur-sm px-8 py-10 flex flex-col gap-8">
+          <div className="relative xl:w-1/2 border border-border bg-background/85 backdrop-blur-sm px-8 py-10 flex flex-col gap-8">
             <div className="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-border" />
             <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-border" />
 

@@ -247,7 +247,7 @@ const renderProjectContent = (project: (typeof projectsData)[0]) => {
             {project.technologies.map((tech, i) => (
               <span
                 key={i}
-                className="border border-foreground px-2 py-1 text-[11px] uppercase tracking-[0.18em] bg-background"
+                className="text-foreground border border-primary px-2 py-1 text-[11px] uppercase tracking-[0.18em] bg-background"
               >
                 {tech}
               </span>

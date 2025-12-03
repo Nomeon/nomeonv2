@@ -15,7 +15,7 @@ export default function IntroSection() {
   }
 
   return (
-    <div className="grid gap-16 lg:grid-cols-2 items-center">
+    <div className="grid gap-16 xl:grid-cols-2 items-center">
       {/* Intro copy */}
       <div className="space-y-6 py-10">
         <p className="text-[11px] uppercase tracking-[0.32em] text-muted-foreground">

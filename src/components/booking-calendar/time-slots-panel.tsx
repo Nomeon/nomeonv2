@@ -23,7 +23,7 @@ export const TimeSlotsPanel: React.FC<TimeSlotsPanelProps> = ({
 }) => {
 
   return (
-    <div className="w-full border-t lg:border-t-0">
+    <div className="w-full border-t lg:border-t-0 max-lg:pt-6">
       {/* Time Slots */}
       <div className="relative">
         {/* Scroll container with visible scrollbar and height limit */}

@@ -354,7 +354,7 @@ function ComparisonSlider() {
 
 export function HeroAnimation() {
   return (
-    <div className="relative w-full h-full min-h-[260px] bg-background/80 overflow-hidden">
+    <div className="relative w-full h-full min-h-[380px] bg-background/80 overflow-hidden">
       <ComparisonSlider />
     </div>
   );

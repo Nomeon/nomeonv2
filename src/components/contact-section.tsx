@@ -19,7 +19,7 @@ export default function ContactSection() {
 
   return (
     <div className="container mx-auto w-full">
-      <div className="grid gap-16 lg:grid-cols-2">
+      <div className="grid gap-16 2xl:grid-cols-2">
         {/* CONTACT FORM */}
         <div
           id="contact-form"
