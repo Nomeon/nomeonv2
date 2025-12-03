@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans, Baumans } from "next/font/google";
-import Header from "@/components/custom/header";
+// import Header from "@/components/custom/header"; // optional now
 import Footer from "@/components/custom/footer";
-import LogoFrame from "@/components/custom/logo-frame";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SectionSpine, SocialSpine, TopSpine } from "@/components/custom/section-spine";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${notoSans.variable} ${baumans.variable} antialiased`}
+        className={`${notoSans.variable} ${baumans.variable} antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
@@ -38,10 +38,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-            <Header />
-            {/* <LogoFrame /> */}
-            <main className="font-noto">{children}</main>
-            <Footer />
+          {/* Global layout wrapper */}
+          <div className="relative min-h-screen">
+            <SectionSpine />
+            <SocialSpine />
+            <TopSpine />
+            <div className="flex min-h-dvh flex-col px-6 lg:px-48">
+              <main className="flex-1 font-noto pt-16">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>
