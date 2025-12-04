@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/animate-ui/components/base/accordion";
-import { useState } from "react";
 import { motion } from "motion/react";
 
 // Project data structure
@@ -284,7 +283,7 @@ const items = projectsData.map((project) => ({
 }));
 
 function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
 
   return (
     <AccordionItem
@@ -295,8 +294,8 @@ function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
       <AccordionTrigger
         data-magnetic="true"
         className="text-left lg:pl-6 md:pl-14 mt-4 text-foreground/40 hover:cursor-pointer hover:text-primary hover:no-underline -space-y-6 data-panel-open:text-primary [&>svg]:hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        // onMouseEnter={() => setIsHovered(true)}
+        // onMouseLeave={() => setIsHovered(false)}
       >
         <div className="flex flex-1 items-start gap-4">
           <p className="text-xs font-baumans">{item.id}</p>
