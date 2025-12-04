@@ -3,17 +3,140 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
+import { motion, animate } from "motion/react";
+import { CheckCircle } from "lucide-react";
+
+type OperationStatus = "running" | "done";
+
+type Operation = {
+  label: string;
+  meta: string;
+};
+
+type VisibleOperation = Operation & { status: OperationStatus };
+
+// six-step cycle
+const OPERATIONS: Operation[] = [
+  { label: "Ingest Payload 47-B", meta: "JSON • 18 fields" },
+  { label: "Normalize Entities", meta: "Ruleset v2.3 • Applied" },
+  { label: "Resolve Foreign Keys", meta: "DB Scan • 3 lookups" },
+  { label: "Enrichment Pass", meta: "API Layer • 2 merges" },
+  { label: "Calculate Deltas", meta: "Diff Engine • 41 changes" },
+  { label: "Finalize Export Block", meta: "CSV • 1.7 kB" },
+];
 
 /* ===========================
    Left side: Client-facing UI
    =========================== */
 
-function ClientMock() {
+export function ClientMock() {
+  const [records, setRecords] = React.useState(0);
+  const [runtime, setRuntime] = React.useState(0);
+  const [visibleOps, setVisibleOps] = React.useState<VisibleOperation[]>([]);
+
+  React.useEffect(() => {
+    let isCancelled = false;
+
+    async function runCycle() {
+      if (isCancelled) return;
+
+      // reset state at the start of each cycle
+      setRecords(0);
+      setRuntime(0);
+      setVisibleOps([]);
+
+      const totalOps = 6;
+      const perOpAnim = 1.2; // seconds to animate records
+      const perOpPause = 0.8; // pause between ops
+      const finalPause = 2;
+      const approxCycleDuration =
+        totalOps * (perOpAnim + perOpPause) + finalPause; // for runtime
+
+      // runtime counter animation
+      const runtimeAnim = animate(0, approxCycleDuration, {
+        duration: approxCycleDuration,
+        ease: "linear",
+        onUpdate: (value) => {
+          if (isCancelled) return;
+          setRuntime(Math.floor(value));
+        },
+      });
+
+      let currentRecords = 0;
+
+      for (let i = 0; i < totalOps; i++) {
+        if (isCancelled) break;
+
+        const opTemplate = OPERATIONS[i % OPERATIONS.length];
+
+        // add operation as "running"
+        setVisibleOps((prev) => [
+          ...prev,
+          { ...opTemplate, status: "running" as const },
+        ]);
+
+        // choose random increment for records
+        const increment = 40 + Math.floor(Math.random() * 120);
+        const nextRecords = currentRecords + increment;
+
+        const recordsAnim = animate(currentRecords, nextRecords, {
+          duration: perOpAnim,
+          ease: "easeOut",
+          onUpdate: (value) => {
+            if (isCancelled) return;
+            setRecords(Math.round(value));
+          },
+        });
+
+        // wait for records animation to finish
+        await recordsAnim.finished;
+        currentRecords = nextRecords;
+
+        if (isCancelled) break;
+
+        // mark this operation as done (checkmark)
+        setVisibleOps((prev) =>
+          prev.map((op, idx) =>
+            idx === i ? { ...op, status: "done" as const } : op
+          )
+        );
+
+        // small pause between operations (using animate as a "delay")
+        await animate(0, 1, { duration: perOpPause }).finished;
+      }
+
+      // let runtime finish if it hasn't
+      await runtimeAnim.finished;
+
+      if (isCancelled) return;
+
+      // short pause showing final state
+      await animate(0, 1, { duration: finalPause }).finished;
+
+      // reset for the next cycle
+      setVisibleOps([]);
+      setRecords(0);
+      setRuntime(0);
+    }
+
+    async function loop() {
+      while (!isCancelled) {
+        await runCycle();
+      }
+    }
+
+    loop();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  const runtimeSeconds = runtime % 60;
+
   return (
     <div className="h-full w-full bg-background">
       <div className="h-full w-full px-6 py-5 flex flex-col gap-4">
-        
         {/* header */}
         <div className="flex items-center justify-between mt-6">
           <div className="space-y-1">
@@ -25,65 +148,129 @@ function ClientMock() {
             </h3>
           </div>
 
-          <button className="border border-border px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-foreground hover:bg-foreground/5">
-            Run Task
-          </button>
+          <motion.button
+            className="border border-border px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-foreground hover:bg-foreground/5 relative overflow-hidden"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            animate={{
+              boxShadow: [
+                "0 0 0 0 rgba(148,163,184,0.18)",
+                "0 0 0 7px rgba(148,163,184,0)",
+              ],
+            }}
+            transition={{
+              duration: 1.6,
+              repeat: Infinity,
+              ease: "easeOut",
+            }}
+          >
+            <span className="relative">Run Task</span>
+          </motion.button>
         </div>
 
-        {/* stats row */}
+        {/* stats row: Records (left) • Runtime (center) • Issues (right) */}
         <div className="grid grid-cols-3 gap-3 text-[11px]">
-          <div className="border border-border px-3 py-2">
+          {/* Records */}
+          <motion.div
+            className="border border-border px-3 py-2"
+            animate={{ y: 0 }}
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+          >
             <p className="uppercase tracking-[0.18em] text-muted-foreground">
               Records
             </p>
-            <p className="mt-1 text-sm">1 028</p>
-          </div>
-
-          <div className="border border-border px-3 py-2">
-            <p className="uppercase tracking-[0.18em] text-muted-foreground">
-              Issues
+            <p className="mt-1 text-sm">
+              {records.toLocaleString("nl-NL")}
             </p>
-            <p className="mt-1 text-sm text-emerald-500">0</p>
-          </div>
+          </motion.div>
 
-          <div className="border border-border px-3 py-2">
+          {/* Runtime (center) */}
+          <motion.div
+            className="border border-border px-3 py-2"
+            animate={{ y: 0 }}
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+          >
             <p className="uppercase tracking-[0.18em] text-muted-foreground">
               Runtime
             </p>
-            <p className="mt-1 text-sm">00:08</p>
-          </div>
+            <p className="mt-1 text-sm">
+              00:{runtimeSeconds.toString().padStart(2, "0")}
+            </p>
+          </motion.div>
+
+          {/* Issues (right, stays 0 but feels alive) */}
+          <motion.div
+            className="border border-border px-3 py-2"
+            animate={{ y: 0 }}
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+          >
+            <p className="uppercase tracking-[0.18em] text-muted-foreground">
+              Issues
+            </p>
+            <p
+              className="mt-1 text-sm text-emerald-500"
+            >
+              0
+            </p>
+          </motion.div>
         </div>
 
-        {/* simple list */}
+        {/* Recent operations (sequenced) */}
         <div className="mt-1 flex-1 border border-dashed border-border/70 px-3 py-2 text-[11px] space-y-1 overflow-hidden">
           <p className="uppercase tracking-[0.18em] text-muted-foreground mb-2">
             Recent Operations
           </p>
 
-          <div className="flex items-center justify-between">
-            <span>Record Set A-12</span>
-            <span className="text-muted-foreground">JSON • 4 items</span>
-          </div>
+          <div className="space-y-1.5">
+            {visibleOps.map((op, idx) => {
+              const isRunning = op.status === "running";
+              const isDone = op.status === "done";
 
-          <div className="flex items-center justify-between">
-            <span>Batch Import 7B</span>
-            <span className="text-muted-foreground">CSV • 12 items</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span>Data Sync 204</span>
-            <span className="text-muted-foreground">API • Completed</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span>Schema Check</span>
-            <span className="text-muted-foreground">Report • OK</span>
+              return (
+                <motion.div
+                  key={`${op.label}-${idx}`}
+                  className="flex items-center justify-between"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <div className="flex items-center gap-2">
+                    {isRunning && (
+                      <motion.span
+                        className="h-1.5 w-1.5 ml-0.5 mr-1 rounded-full bg-primary"
+                        animate={{ scale: [1, 1.4, 1] }}
+                        transition={{
+                          duration: 0.8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    )}
+                    {isDone && (
+                      <span className="h-3 w-3 flex items-center justify-center">
+                        <CheckCircle className=" text-emerald-500" />
+                      </span>
+                    )}
+                    <span>{op.label}</span>
+                  </div>
+                  <span className="text-muted-foreground">{op.meta}</span>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        <p className="text-[10px] text-muted-foreground uppercase tracking-[0.26em]">
+        <motion.p
+          className="text-[10px] text-muted-foreground uppercase tracking-[0.26em]"
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.35 }}
+        >
           Clear controls. No distractions.
-        </p>
+        </motion.p>
       </div>
     </div>
   );
@@ -128,6 +315,10 @@ function TechnicalFlow() {
     .map((n) => `${n.x * 320},${n.y * 200}`)
     .join(" ");
 
+  const exportNode = NODES.find((n) => n.id === "export")!;
+  const exportCx = exportNode.x * 320;
+  const exportCy = exportNode.y * 200;
+
   return (
     <div className="relative h-full w-full bg-background">
       {/* background grid */}
@@ -157,16 +348,35 @@ function TechnicalFlow() {
           const y2 = to.y * 200;
 
           return (
-            <line
-              key={`base-${fromId}-${toId}`}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="rgba(148,163,184,0.45)"
-              strokeWidth={1}
-              strokeLinecap="round"
-            />
+            <g key={`edge-${fromId}-${toId}`}>
+              <line
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="rgba(148,163,184,0.35)"
+                strokeWidth={1}
+                strokeLinecap="round"
+              />
+              {/* animated "signal" overlay */}
+              <motion.line
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="var(--primary)"
+                strokeWidth={1}
+                strokeLinecap="round"
+                strokeDasharray="10 14"
+                initial={{ strokeDashoffset: 24, opacity: 0.3 }}
+                animate={{ strokeDashoffset: -24, opacity: 0.9 }}
+                transition={{
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            </g>
           );
         })}
 
@@ -211,6 +421,7 @@ function TechnicalFlow() {
                     duration: 1.6,
                     repeat: Infinity,
                     repeatType: "reverse",
+                    delay: node.id === "logic" ? 0.2 : 0,
                   }}
                   fill="var(--primary)"
                 />
@@ -244,6 +455,23 @@ function TechnicalFlow() {
             ease: "easeInOut",
           }}
         />
+
+        {/* export "ping" */}
+        <motion.circle
+          cx={exportCx}
+          cy={exportCy}
+          r={4}
+          fill="none"
+          stroke="var(--primary)"
+          strokeWidth={1}
+          initial={{ opacity: 0.3, r: 4 }}
+          animate={{ opacity: [0.4, 0, 0.4], r: [4, 14, 4] }}
+          transition={{
+            duration: 2.4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </svg>
 
       <div className="absolute right-6 bottom-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground text-right">
@@ -255,6 +483,7 @@ function TechnicalFlow() {
     </div>
   );
 }
+
 
 /* ===========================
    Comparison Slider

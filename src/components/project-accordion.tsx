@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/animate-ui/components/base/accordion";
-import { TextRoll } from "./ui/text-roll";
 import { useState } from "react";
 import { motion } from "motion/react";
 
@@ -13,7 +12,7 @@ const projectsData = [
   {
     id: "1",
     title: "gewoonhout",
-    year: 2022,
+    year: 2023,
     image: null,
     challenge: [
       "Work preparators spent several days manually extracting data from 3D IFC models into Excel sheets, as each of the elements had to be handled. This was time-consuming and very prone to error.",
@@ -33,7 +32,7 @@ const projectsData = [
   {
     id: "2",
     title: "Koopmans Bouwgroep",
-    year: 2022,
+    year: 2023,
     image: null,
     challenge:
       "The company struggled with a wildly inefficient workflow: calculators had to perform the same calculation twice just to get ERP-compatible output. IBIS Trad, the estimating software, provided almost no flexibility in how data could be exported, while the ERP system expected a very rigid and outdated format. Because the two systems couldn't speak the same language, every project required manual rework, duplicated effort, and endless copy-pasting. This not only slowed down the calculation team, but also increased the risk of inconsistent data and costly mistakes.",
@@ -46,10 +45,27 @@ const projectsData = [
     ],
     technologies: ["Tauri", "Rust", "TypeScript"],
   },
-  {
+    {
     id: "3",
+    title: "Voorbij Amsterdam",
+    image: null,
+    year: 2023,
+    challenge:
+      "Voorbij Amsterdam wanted to optimize their production sequence, but the complexity of their workflow made manual experimentation nearly impossible. Many variables influence the production order, and inefficient scheduling leads to delays, idle machines, or unnecessary bottlenecks. Without a structured way to simulate different scenarios, finding the most efficient production strategy was basically guesswork.",
+    solution:
+      "I developed a custom Python simulation that models Voorbij's production process and evaluates different production orders using an optimization algorithm. The script simulates workflows, timings, and constraints to identify faster, more efficient sequences. This allows the team to compare strategies, analyze outcomes, and make data-driven improvements to the production plan without disrupting real-world operations.",
+    benefits: [
+      "Insight into optimal production sequencing",
+      "Reduced bottlenecks and improved workflow efficiency",
+      "Ability to test scenarios safely before implementing changes",
+      "Reusable simulation framework for future analyses",
+    ],
+    technologies: ["Python", "NumPy", "Custom algorithmic optimization"],
+  },
+  {
+    id: "4",
     title: "Nijhuis Rioolreiniging",
-    year: 2022,
+    year: 2023,
     image: null,
     challenge:
       "Nijhuis Rioolreiniging had no streamlined way to manage their container rentals. Availability, rentals, returns, and pickup moments were tracked manually across different places, making it difficult for the team to maintain an accurate overview. Without a central system, mistakes like double-bookings, forgotten pickups, or unclear status updates were common, slowing down operations and reducing clarity between team members.",
@@ -66,10 +82,10 @@ const projectsData = [
     technologies: ["Next.js", "Vercel", "Neon DB"],
   },
   {
-    id: "4",
+    id: "5",
     title: "Elan Interim Advies",
     image: null,
-    year: 2022,
+    year: 2024,
     challenge:
       "Elan Interim Advies needed a modern and professional online presence that clearly communicated their services and expertise. Their existing branding wasn't fully translated to the web, and there was no central place for potential clients to learn about their work or get in touch easily. The goal was to build a clean, trustworthy website that feels fast, personal, and well-structured across all devices.",
     solution:
@@ -83,10 +99,10 @@ const projectsData = [
     technologies: ["Next.js", "Tailwind CSS", "Vercel"],
   },
   {
-    id: "5",
+    id: "6",
     title: "Vosteq",
     image: null,
-    year: 2022,
+    year: 2024,
     challenge:
       "Vosteq's previous website was built on WordPress and suffered from slow loading times, poor performance optimizations, and limited flexibility. The company needed a fast, modern, and scalable site that could support both static pages and a dynamic blog. The design was created by Catapult, but the implementation required tight collaboration to ensure the final result matched the visual direction while dramatically improving speed and maintainability.",
     solution:
@@ -101,27 +117,27 @@ const projectsData = [
     technologies: ["Next.js", "DatoCMS", "Vercel"],
   },
   {
-    id: "6",
-    title: "Voorbij Amsterdam",
-    image: null,
-    year: 2022,
-    challenge:
-      "Voorbij Amsterdam wanted to optimize their production sequence, but the complexity of their workflow made manual experimentation nearly impossible. Many variables influence the production order, and inefficient scheduling leads to delays, idle machines, or unnecessary bottlenecks. Without a structured way to simulate different scenarios, finding the most efficient production strategy was basically guesswork.",
-    solution:
-      "I developed a custom Python simulation that models Voorbij's production process and evaluates different production orders using an optimization algorithm. The script simulates workflows, timings, and constraints to identify faster, more efficient sequences. This allows the team to compare strategies, analyze outcomes, and make data-driven improvements to the production plan without disrupting real-world operations.",
-    benefits: [
-      "Insight into optimal production sequencing",
-      "Reduced bottlenecks and improved workflow efficiency",
-      "Ability to test scenarios safely before implementing changes",
-      "Reusable simulation framework for future analyses",
-    ],
-    technologies: ["Python", "NumPy", "Custom algorithmic optimization"],
-  },
-  {
     id: "7",
+    title: "MijnMeeloopdag",
+    image: null,
+    year: 2024,
+    challenge:
+      "Organizing and managing meeloopdag (job shadowing) events for students can be complex and time-consuming. Companies need a streamlined way to list available positions, allow students to sign up, and coordinate schedules. The existing process was manual and inefficient, leading to missed opportunities and administrative overhead. MijnMeeloopdag was created to simplify this process by providing a dedicated platform for companies and students to connect and manage meeloopdag events seamlessly.",
+    solution:
+      "Together with a friend, we developed MijnMeeloopdag, a web application that allows companies to create profiles, list available meeloopdag positions, and manage student sign-ups. Students can browse opportunities, register for events, and receive automated confirmations. The platform includes features for scheduling, notifications, and easy communication between companies and students. By automating much of the administrative work, MijnMeeloopdag makes it easier for companies to host successful meeloopdag events and for students to find valuable learning experiences.",
+    benefits: [
+      "Streamlined management of meeloopdag events",
+      "Easy sign-up process for shadowers",
+      "Improved communication between companies and students",
+      "Reduced administrative overhead for organizing events",
+    ],
+    technologies: ["Next.js", "TypeScript", "Neon", "Vercel"],
+  },
+    {
+    id: "8",
     title: "KiwiConnect",
     image: null,
-    year: 2022,
+    year: 2025,
     challenge:
       "Many companies struggle to efficiently screen resumes, match candidates to job openings, and create a consistent hiring process. Traditional ATS systems are often outdated, rigid, and offer limited insight into candidate potential. KiwiConnect was created to solve this problem from the ground up: a modern, fast, and intelligent platform capable of analyzing resumes, matching them to jobs, and generating insights that help companies make better hiring decisions. As the solo developer, I was responsible for turning a business idea into a fully functioning SaaS product.",
     solution:
@@ -285,17 +301,9 @@ function AccordionItemWithHover({ item }: { item: typeof items[0] }) {
         <div className="flex flex-1 items-start gap-4">
           <p className="text-xs font-baumans">{item.id}</p>
           <h1
-            className="font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl"
+            className=" font-baumans uppercase relative text-center text-xl md:text-3xl lg:text-5xl"
           >
-            <TextRoll
-              duration={0.2}
-              getEnterDelay={() => 0.1}
-              getExitDelay={() => 0.2}
-              transition={{ ease: "easeInOut" }}
-              hovered={isHovered}
-            >
-              {item.title}
-            </TextRoll>
+            {item.title}
           </h1>
         </div>
       </AccordionTrigger>

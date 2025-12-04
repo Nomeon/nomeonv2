@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
-import { BookingForm } from './booking-form/booking-form';
-import { BookingSuccess } from './booking-success';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect, useRef } from "react";
+import { X } from "lucide-react";
+import { BookingForm } from "./booking-form/booking-form";
+import { BookingSuccess } from "./booking-success";
+import { Button } from "@/components/ui/button";
 import type {
   CalcomBookingResponse,
   RescheduleRequest,
   CancelRequest,
-} from '@/types/booking';
-import { Calendar } from './calendar';
-import { CancelConfirmationModal } from './modals/cancel-confirmation-modal';
-import { RescheduleConfirmationModal } from './modals/reschedule-confirmation-modal';
-import { ErrorModal } from './modals/error-modal';
+} from "@/types/booking";
+import { Calendar } from "./calendar";
+import { CancelConfirmationModal } from "./modals/cancel-confirmation-modal";
+import { RescheduleConfirmationModal } from "./modals/reschedule-confirmation-modal";
+import { ErrorModal } from "./modals/error-modal";
 
-type BookingStep = 'calendar' | 'form' | 'success' | 'reschedule' | 'cancelled';
+type BookingStep = "calendar" | "form" | "success" | "reschedule" | "cancelled";
 
 interface BookingWidgetProps {
   eventTypeId: string;
@@ -26,14 +26,14 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
   eventTypeId,
   eventLength = 30,
 }) => {
-  const [currentStep, setCurrentStep] = useState<BookingStep>('calendar');
+  const [currentStep, setCurrentStep] = useState<BookingStep>("calendar");
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [booking, setBooking] = useState<CalcomBookingResponse | null>(null);
-  const [userTimezone, setUserTimezone] = useState<string>('');
+  const [userTimezone, setUserTimezone] = useState<string>("");
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [showRescheduleDialog, setShowRescheduleDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [cancelCountdown, setCancelCountdown] = useState(5);
   const [isRescheduled, setIsRescheduled] = useState(false);
   const [pendingRescheduleSlot, setPendingRescheduleSlot] = useState<
@@ -54,12 +54,12 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
 
   // Auto-reset cancelled state after countdown
   useEffect(() => {
-    if (currentStep === 'cancelled') {
+    if (currentStep === "cancelled") {
       const interval = setInterval(() => {
         setCancelCountdown((prev) => {
           if (prev <= 1) {
             // Reset to calendar view
-            setCurrentStep('calendar');
+            setCurrentStep("calendar");
             setBooking(null);
             setSelectedSlot(null);
             return 5; // Reset countdown for next time
@@ -77,33 +77,33 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
   const handleSlotSelect = (slot: string) => {
     hasUserInteracted.current = true;
     setSelectedSlot(slot);
-    setCurrentStep('form');
+    setCurrentStep("form");
   };
 
   const handleBookingSuccess = (bookingData: CalcomBookingResponse) => {
     hasUserInteracted.current = true;
     setBooking(bookingData);
     setIsRescheduled(false); // This is a new booking
-    setCurrentStep('success');
+    setCurrentStep("success");
   };
 
   const handleBackToCalendar = () => {
     hasUserInteracted.current = true;
     setSelectedSlot(null);
-    setCurrentStep('calendar');
+    setCurrentStep("calendar");
   };
 
   const handleNewBooking = () => {
     setSelectedSlot(null);
     setBooking(null);
     setIsRescheduled(false);
-    setCurrentStep('calendar');
+    setCurrentStep("calendar");
   };
 
   const handleReschedule = () => {
     hasUserInteracted.current = true;
     // Go back to calendar but keep the booking data for rescheduling
-    setCurrentStep('reschedule');
+    setCurrentStep("reschedule");
   };
 
   const handleCancel = () => {
@@ -119,29 +119,29 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
     try {
       const cancelData: CancelRequest = {
         bookingUid: booking.uid,
-        cancellationReason: 'Cancelled by user',
+        cancellationReason: "Cancelled by user",
       };
 
-      const response = await fetch('/api/booking-calendar/cancel', {
-        method: 'POST',
+      const response = await fetch("/api/booking-calendar/cancel", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(cancelData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to cancel booking');
+        throw new Error("Failed to cancel booking");
       }
 
       hasUserInteracted.current = true;
       setShowCancelDialog(false);
-      setCurrentStep('cancelled');
+      setCurrentStep("cancelled");
     } catch (error) {
-      console.error('Cancel error:', error);
+      console.error("Cancel error:", error);
       setShowCancelDialog(false);
       setErrorMessage(
-        'Failed to cancel the meeting. Please use the cancellation link in your booking confirmation email to cancel this meeting.'
+        "Failed to cancel the meeting. Please use the cancellation link in your booking confirmation email to cancel this meeting."
       );
       setShowErrorDialog(true);
     } finally {
@@ -164,19 +164,19 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
       const rescheduleData: RescheduleRequest = {
         bookingUid: booking.uid,
         start: pendingRescheduleSlot,
-        reschedulingReason: 'User requested reschedule',
+        reschedulingReason: "User requested reschedule",
       };
 
-      const response = await fetch('/api/booking-calendar/reschedule', {
-        method: 'POST',
+      const response = await fetch("/api/booking-calendar/reschedule", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(rescheduleData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to reschedule booking');
+        throw new Error("Failed to reschedule booking");
       }
 
       const result = await response.json();
@@ -186,13 +186,13 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
       setIsRescheduled(true); // This is a reschedule
       setShowRescheduleDialog(false);
       setPendingRescheduleSlot(null);
-      setCurrentStep('success');
+      setCurrentStep("success");
     } catch (error) {
-      console.error('Reschedule error:', error);
+      console.error("Reschedule error:", error);
       setShowRescheduleDialog(false);
       setPendingRescheduleSlot(null);
       setErrorMessage(
-        'Failed to reschedule the meeting. Please use the rescheduling link in your booking confirmation email to reschedule this meeting.'
+        "Failed to reschedule the meeting. Please use the rescheduling link in your booking confirmation email to reschedule this meeting."
       );
       setShowErrorDialog(true);
     } finally {
@@ -202,7 +202,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
 
   return (
     <div ref={widgetRef} className="mx-auto w-full max-w-[760px]">
-      {currentStep === 'calendar' && (
+      {currentStep === "calendar" && (
         <Calendar
           eventTypeId={eventTypeId}
           onSlotSelect={handleSlotSelect}
@@ -210,7 +210,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         />
       )}
 
-      {currentStep === 'form' && selectedSlot && (
+      {currentStep === "form" && selectedSlot && (
         <BookingForm
           selectedSlot={selectedSlot}
           eventTypeId={eventTypeId}
@@ -221,7 +221,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         />
       )}
 
-      {currentStep === 'reschedule' && booking && (
+      {currentStep === "reschedule" && booking && (
         <Calendar
           eventTypeId={eventTypeId}
           onSlotSelect={handleRescheduleSlotSelect}
@@ -229,7 +229,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         />
       )}
 
-      {currentStep === 'success' && booking && (
+      {currentStep === "success" && booking && (
         <BookingSuccess
           booking={booking}
           userTimezone={userTimezone}
@@ -239,27 +239,27 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({
         />
       )}
 
-      {currentStep === 'cancelled' && (
-        <div className="bg-neutral-900 rounded-2xl border border-neutral-700 shadow-xl">
-          <div className="p-6 text-center">
-            <div className="mb-6 flex justify-center">
-              <div className="rounded-full bg-red-500/10 p-4">
-                <X className="h-12 w-12 text-red-400" />
+      {currentStep === "cancelled" && (
+        <div className="">
+          <div className="text-center">
+            {/* Cancelled Message  */}
+            <div className="flex justify-center items-center">
+              <h2 className="text-2xl font-baumans">Meeting Cancelled</h2>
+              <div className="p-4">
+                <X className="h-8 w-8 text-destructive" />
               </div>
             </div>
-            <h2 className="mb-2 text-2xl font-bold text-neutral-100">
-              Meeting Cancelled
-            </h2>
-            <p className="mb-6 text-neutral-400">
+            <p className="mb-4 text-sm">
               Your meeting has been successfully cancelled.
             </p>
-            <p className="mb-6 text-sm text-neutral-500">
-              Returning to calendar in {cancelCountdown} seconds...
+            <p className="mb-6 text-sm">
+              Returning to calendar in{" "}
+              <span className="text-muted-foreground font-baumans">
+                {cancelCountdown}
+              </span>{" "}
+              seconds...
             </p>
-            <Button
-              onClick={handleNewBooking}
-              className="w-full max-w-sm"
-            >
+            <Button onClick={handleNewBooking} className="w-full max-w-sm">
               Book Another Meeting
             </Button>
           </div>

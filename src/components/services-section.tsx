@@ -54,11 +54,11 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.1 }}
           viewport={{ once: true, amount: 0.2 }}
-          className="group relative border border-border bg-background/85 backdrop-blur-sm px-5 py-6 flex flex-col gap-4 hover:scale-101 transition-transform"
+          className="group relative border border-border px-5 py-6 flex flex-col gap-4"
         >
           {/* corner brackets */}
-          <div className="pointer-events-none absolute -top-3 -left-3 h-6 w-6 border-t border-l border-border" />
-          <div className="pointer-events-none absolute -bottom-3 -right-3 h-6 w-6 border-b border-r border-border" />
+          <div className="pointer-events-none absolute -top-3 -left-3 h-6 w-6 border-t border-l border-border group-hover:border-primary transition-colors duration-300" />
+          <div className="pointer-events-none absolute -bottom-3 -right-3 h-6 w-6 border-b border-r border-border group-hover:border-primary transition-colors duration-300" />
 
           {/* meta row */}
           <div className="flex items-center justify-between gap-2 text-[11px] uppercase tracking-[0.26em] text-muted-foreground">
@@ -89,7 +89,7 @@ export default function ServicesSection() {
                 className="
                   border border-border px-2 py-0.5 text-[10px]
                   uppercase tracking-[0.24em] text-muted-foreground
-                  transition-colors
+                  transition-colors duration-300
                   group-hover:border-primary group-hover:text-foreground group-hover:bg-primary/5
                 "
               >

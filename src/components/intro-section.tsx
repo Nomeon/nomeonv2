@@ -114,14 +114,14 @@ export default function IntroSection() {
 
       {/* Hero animation on the right */}
       <motion.div
-        className="relative hidden border border-border lg:block w-full bg-background/85 backdrop-blur-sm h-full"
+        className="group relative hidden border border-border lg:block w-full bg-background/85 backdrop-blur-sm h-full"
         initial={{ opacity: 0, scale: 0.98 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
         viewport={{ once: true }}
       >
-        <div className="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-border" />
-        <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-border" />
+        <div className="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-border group-hover:border-primary transition-colors duration-300" />
+        <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-border group-hover:border-primary transition-colors duration-300" />
         <HeroAnimation />
       </motion.div>
     </div>
