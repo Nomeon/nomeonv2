@@ -14,7 +14,7 @@ import {
   SheetClose,
   SheetDescription,
 } from "../ui/sheet";
-import { LocaleSwitcherMobile } from "./locale-switcher";
+import { LocaleButtonMobile } from "../locale/locale-mobile";
 
 const sections = [
   { index: "00", label: "Intro", href: "#intro" },
@@ -257,7 +257,7 @@ export function MobileMenu() {
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ duration: 0.3, ease: "easeOut", delay: 1.05 }}
                     >
-                     <LocaleSwitcherMobile />
+                     <LocaleButtonMobile />
                     </motion.div>
                   </div>
                 </>

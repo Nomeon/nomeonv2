@@ -1,14 +1,17 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import { Noto_Sans, Baumans } from "next/font/google";
 import Footer from "@/components/custom/footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SectionSpine, SocialSpine, TopSpine } from "@/components/custom/section-spine";
+import {
+  SectionSpine,
+  SocialSpine,
+  TopSpine,
+} from "@/components/custom/section-spine";
 import { MobileMenu } from "@/components/custom/mobile-menu";
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { hasLocale, Locale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -21,9 +24,18 @@ const baumans = Baumans({
   weight: ["400"],
 });
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata" });
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata(
+  props: Omit<LayoutProps<"/[locale]">, "children">
+) {
+  const { locale } = await props.params;
+  const t = await getTranslations({
+    locale: locale as Locale,
+    namespace: "Metadata",
+  });
 
   return {
     title: t("title"),
@@ -40,14 +52,14 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as "nl" | "en")) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const messages = await getMessages();
+  setRequestLocale(locale);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${notoSans.variable} ${baumans.variable} antialiased bg-background text-foreground`}
       >
@@ -57,17 +69,15 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages}>
-              <SectionSpine />
-              <SocialSpine />
-              <TopSpine />
-              <MobileMenu />
-              <div className="flex min-h-dvh flex-col px-4 lg:px-48">
-                <main className="flex-1 font-noto">
-                  {children}
-                </main>
-                <Footer />
-              </div>
+          <NextIntlClientProvider>
+            <SectionSpine />
+            <SocialSpine />
+            <TopSpine />
+            <MobileMenu />
+            <div className="flex min-h-dvh flex-col px-4 lg:px-48">
+              <main className="flex-1 font-noto">{children}</main>
+              <Footer />
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

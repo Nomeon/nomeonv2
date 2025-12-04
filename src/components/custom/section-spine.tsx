@@ -6,7 +6,7 @@ import { Github, Linkedin, Mail, Moon, Phone, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { motion } from "motion/react";
-import { LocaleSwitcher } from "./locale-switcher";
+import { LocaleButtonDesktop } from "../locale/locale-desktop";
 
 const SECTIONS = [
   { id: "intro", label: "Intro" },
@@ -200,7 +200,7 @@ export function TopSpine() {
               </div>
             </button>
             <div className="bg-background w-8 flex items-center justify-center ml-2 mr-1">
-              <LocaleSwitcher />
+              <LocaleButtonDesktop />
             </div>
             {/* closing line segment */}
             <span className="h-4 w-px bg-muted-foreground group-hover:bg-foreground mr-2 ml-2" />
