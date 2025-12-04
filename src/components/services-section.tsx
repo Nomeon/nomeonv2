@@ -58,12 +58,7 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.1 }}
           viewport={{ once: true, amount: 0.2 }}
-          whileHover={{
-            y: -2,
-            x: -2,
-            transition: { duration: 0.15 },
-          }}
-          className="group relative border border-border bg-background/85 backdrop-blur-sm px-5 py-6 flex flex-col gap-4"
+          className="group relative border border-border bg-background/85 backdrop-blur-sm px-5 py-6 flex flex-col gap-4 hover:scale-101 transition-transform"
         >
           {/* corner brackets */}
           <div className="pointer-events-none absolute -top-3 -left-3 h-6 w-6 border-t border-l border-border" />

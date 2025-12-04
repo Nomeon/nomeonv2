@@ -43,10 +43,10 @@ export default function BackgroundSection() {
             <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
               <p>
                 After graduating in Business &amp; IT at the University of
-                Twente, I found my groove: building smart, pragmatic tools that
-                actually improve how companies work. Less chaos. Fewer manual
-                steps. More breathing room for the people who keep the business
-                running.
+                Twente, I found my groove: building and implementing smart,
+                pragmatic tools that actually improve how companies work. Less
+                chaos. Fewer manual steps. More breathing room for the people
+                who keep the business running.
               </p>
               <p>
                 I have a habit of picking apart messy processes, figuring out
