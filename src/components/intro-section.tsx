@@ -5,8 +5,11 @@ import { Button } from "./ui/button";
 import { TextRoll } from "./ui/text-roll";
 import { useState } from "react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 export default function IntroSection() {
+  const t = useTranslations("IntroSection");
+
   const [isHoveredContact, setIsHoveredContact] = useState(false);
   const [isHoveredBook, setIsHoveredBook] = useState(false);
 
@@ -26,7 +29,7 @@ export default function IntroSection() {
           transition={{ duration: 0.3, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          Hi, my name is
+          {t('intro')}
         </motion.p>
         <h1 className="font-baumans text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-tight">
           <motion.span
@@ -36,7 +39,7 @@ export default function IntroSection() {
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
             viewport={{ once: true }}
           >
-            Stijn Nijhuis.
+            {t('name')}
           </motion.span>
           <motion.span
             className="block mt-2 text-3xl font-noto"
@@ -45,7 +48,7 @@ export default function IntroSection() {
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
             viewport={{ once: true }}
           >
-            I build pragmatic tools for messy processes.
+            {t('catchphrase')}
           </motion.span>
         </h1>
 
@@ -56,11 +59,7 @@ export default function IntroSection() {
           transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
           viewport={{ once: true }}
         >
-          I blend Business &amp; IT: mapping out how a company actually works,
-          then implementing and/or building the software that makes it less
-          chaotic. From ERP systems, data pipelines and simulations to custom
-          internal tools; I care more about what it fixes than how shiny it
-          looks.
+          {t('description')}
         </motion.p>
 
         <motion.div
@@ -82,7 +81,7 @@ export default function IntroSection() {
                 transition={{ ease: "easeInOut" }}
                 hovered={isHoveredContact}
               >
-                Contact me
+                {t('contact')}
               </TextRoll>
           </Button>
           <Button
@@ -98,7 +97,7 @@ export default function IntroSection() {
                 transition={{ ease: "easeInOut" }}
                 hovered={isHoveredBook}
               >
-                Book a call
+                {t('book')}
               </TextRoll>
           </Button>
           <motion.span
@@ -108,7 +107,7 @@ export default function IntroSection() {
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
             viewport={{ once: true }}
           >
-            Working across NL / DE
+            {t('intl')}
           </motion.span>
         </motion.div>
       </div>

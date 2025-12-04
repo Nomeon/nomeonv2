@@ -14,6 +14,7 @@ import {
   SheetClose,
   SheetDescription,
 } from "../ui/sheet";
+import { LocaleSwitcherMobile } from "./locale-switcher";
 
 const sections = [
   { index: "00", label: "Intro", href: "#intro" },
@@ -256,34 +257,7 @@ export function MobileMenu() {
                       exit={{ opacity: 0, y: 20 }}
                       transition={{ duration: 0.3, ease: "easeOut", delay: 1.05 }}
                     >
-                      <Button
-                        onClick={() =>
-                          setTheme(resolvedTheme === "light" ? "dark" : "light")
-                        }
-                        className="w-full flex justify-between mt-4"
-                      >
-                        <span>Language</span>
-                        <div className="flex items-center gap-2">
-                          <Image
-                            className="h-4 w-4 mb-1"
-                            width={16}
-                            height={16}
-                            alt={
-                              resolvedTheme === "light"
-                                ? "Nederlandse vlag"
-                                : "English flag"
-                            }
-                            src={
-                              resolvedTheme === "light"
-                                ? "/images/nl.svg"
-                                : "/images/en.svg"
-                            }
-                          />
-                          <span className="tabular-nums">
-                            {resolvedTheme === "light" ? "Nederlands" : "English"}
-                          </span>
-                        </div>
-                      </Button>
+                     <LocaleSwitcherMobile />
                     </motion.div>
                   </div>
                 </>

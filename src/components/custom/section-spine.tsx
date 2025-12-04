@@ -6,6 +6,7 @@ import { Github, Linkedin, Mail, Moon, Phone, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { motion } from "motion/react";
+import { LocaleSwitcher } from "./locale-switcher";
 
 const SECTIONS = [
   { id: "intro", label: "Intro" },
@@ -199,14 +200,7 @@ export function TopSpine() {
               </div>
             </button>
             <div className="bg-background w-8 flex items-center justify-center ml-2 mr-1">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label="Toggle color mode"
-                className="h-5 w-5 text-primary cursor-pointer hover:text-foreground text-center align-middle font-baumans text-md mb-0.5"
-              >
-                NL
-              </button>
+              <LocaleSwitcher />
             </div>
             {/* closing line segment */}
             <span className="h-4 w-px bg-muted-foreground group-hover:bg-foreground mr-2 ml-2" />

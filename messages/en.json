@@ -1,0 +1,20 @@
+{
+  "Metadata": {
+    "title": "Nomeon | Business & IT Solutions",
+    "description": "Pragmatic solutions for messy processes. From ERP systems and data pipelines to simulations and custom internal tools; I care more about what it solves than how shiny it looks."
+  },
+  "IntroSection": {
+    "intro": "Hi, my name is",
+    "name": "Stijn Nijhuis.",
+    "catchphrase": "I build pragmatic solutions for messy processes.",
+    "description": "Bridging Business & IT: figuring out how a company really works, then implementing or building the software that makes it less chaotic. From ERP systems and data pipelines to simulations and custom internal tools; I care more about what it solves than how shiny it looks.",
+    "contact": "Contact me",
+    "book": "Book a call",
+    "intl": "Working across NL / DE"
+  },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "Sorry, the page you’re looking for doesn't exist.",
+    "back": "Go back to the homepage"
+  }
+}

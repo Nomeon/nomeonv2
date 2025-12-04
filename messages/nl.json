@@ -1,0 +1,20 @@
+{
+  "Metadata": {
+    "title": "Nomeon | Business & IT-oplossingen",
+    "description": "Pragmatische oplossingen voor rommelige processen. Van ERP-systemen, datapijplijnen en simulaties tot maatwerk interne tools; ik geef meer om wat het oplost dan hoe glanzend het eruitziet."
+  },
+  "IntroSection": {
+    "intro": "Hey, mijn naam is",
+    "name": "Stijn Nijhuis.",
+    "catchphrase": "Ik bouw pragmatische oplossingen voor rommelige processen.",
+    "description": "Business & IT combineren: uitzoeken hoe een bedrijf werkelijk werkt, en vervolgens de software implementeren of bouwen die het minder chaotisch maakt. Van ERP-systemen, datapijplijnen en simulaties tot maatwerk interne tools; ik geef meer om wat het oplost dan hoe glanzend het eruitziet.",
+    "contact": "Neem contact op",
+    "book": "Plan een call",
+    "intl": "Actief in NL / DE"
+  },
+  "NotFoundPage": {
+    "title": "Pagina niet gevonden",
+    "description": "Sorry, de pagina die je zoekt bestaat niet.",
+    "back": "Ga terug naar de homepage"
+  }
+}
