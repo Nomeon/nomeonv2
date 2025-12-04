@@ -12,6 +12,7 @@ import { hasLocale, Locale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Toaster } from "@/components/ui/sonner";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -23,6 +24,8 @@ const baumans = Baumans({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -60,6 +63,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+
       <body
         className={`${notoSans.variable} ${baumans.variable} antialiased bg-background text-foreground`}
       >
@@ -78,6 +82,14 @@ export default async function RootLayout({
               <main className="flex-1 font-noto">{children}</main>
               <Footer />
             </div>
+            <Toaster
+              toastOptions={{
+                className:
+                  "!shadow-[2px_2px_0_0_rgba(0,0,0,0.8)] dark:!shadow-[2px_2px_0_0_rgba(255,255,255,0.8)] !bg-primary !text-primary-foreground  !rounded-none !border !border-foreground font-baumans !text-base",
+                descriptionClassName:
+                  "font-noto !text-primary-foreground/90 !text-xs",
+              }}
+            />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

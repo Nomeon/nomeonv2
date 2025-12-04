@@ -84,12 +84,24 @@ export default function BackgroundSection() {
 
         {/* Pixelated canvas placeholder (right) */}
         {/* Operator Spec Sheet (right) */}
-        <div className="group relative xl:w-1/2 border border-border bg-background/85 backdrop-blur-sm px-8 py-10 flex flex-col gap-8">
+        <motion.div
+          className="group relative xl:w-1/2 border border-border bg-background/85 backdrop-blur-sm px-8 py-10 flex flex-col gap-8"
+          initial={{ opacity: 0, scale: 0.98, x: 20 }}
+          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           <div className="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-border group-hover:border-primary transition-colors duration-300" />
           <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-border group-hover:border-primary transition-colors duration-300" />
 
           {/* Title */}
-          <div className="flex items-baseline justify-between gap-4">
+          <motion.div
+            className="flex items-baseline justify-between gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             <div className="flex items-center gap-4">
               <div className="overflow-hidden h-12 w-12 rounded-full border border-border/70 bg-muted/40 flex items-center justify-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
               <Image
@@ -112,10 +124,16 @@ export default function BackgroundSection() {
             <p className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground text-right place-self-start mt-1">
               {t("operator_role")}
             </p>
-          </div>
+          </motion.div>
 
           {/* Spec grid */}
-          <div className="grid gap-4 text-[11px]">
+          <motion.div
+            className="grid gap-4 text-[11px]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+            viewport={{ once: true }}
+          >
             <div className="flex justify-between gap-4 border-b border-dashed border-border/60 pb-2">
               <span className="uppercase tracking-[0.22em] text-muted-foreground">
                 {t("operator_focus_label")}
@@ -145,10 +163,15 @@ export default function BackgroundSection() {
               </span>
               <span className="text-right">{t("operator_based_value")}</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Education */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             <p className="text-[11px] uppercase tracking-[0.26em] text-muted-foreground mb-2">
               {t("operator_education_label")}
             </p>
@@ -170,10 +193,16 @@ export default function BackgroundSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Little personality row */}
-          <div className="pt-4 border-t border-dashed border-border/60">
+          <motion.div
+            className="pt-4 border-t border-dashed border-border/60"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
+            viewport={{ once: true }}
+          >
             <p className="text-[11px] uppercase tracking-[0.26em] text-muted-foreground mb-2">
               {t("operator_into_label")}
             </p>
@@ -193,9 +222,9 @@ export default function BackgroundSection() {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </div>
     </div>
   );

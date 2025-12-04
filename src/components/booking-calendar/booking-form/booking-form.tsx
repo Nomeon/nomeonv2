@@ -11,6 +11,7 @@ import { MeetingDetails } from "./meeting-details";
 import { ContactSection } from "./contact-section";
 import { GuestsSection } from "./guests-section";
 import { CalcomBookingRequest, CalcomBookingResponse } from "@/types/booking";
+import { TextRoll } from "@/components/ui/text-roll";
 
 interface BookingFormProps {
   selectedSlot: string;
@@ -31,6 +32,8 @@ export const BookingForm: React.FC<BookingFormProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [guests, setGuests] = useState<string[]>([]);
+  const [isHoveredBack, setIsHoveredBack] = useState(false);
+  const [isHoveredConfirm, setIsHoveredConfirm] = useState(false);
 
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
@@ -130,17 +133,38 @@ export const BookingForm: React.FC<BookingFormProps> = ({
         <div className="flex gap-3 z-20">
           <Button
             variant="outline"
-            size='lg'
+            size="lg"
             onClick={onBack}
             className="flex-1 cursor-pointer h-12"
+            onMouseEnter={() => setIsHoveredBack(true)}
+            onMouseLeave={() => setIsHoveredBack(false)}
+          >
+            <TextRoll
+              duration={0.2}
+              getEnterDelay={() => 0.1}
+              getExitDelay={() => 0.2}
+              transition={{ ease: "easeInOut" }}
+              hovered={isHoveredBack}
             >
-            Back
+              Back
+            </TextRoll>
           </Button>
           <Button
             disabled={loading}
-            size='lg'
-            className="flex-1 cursor-pointer h-12">
-            {loading ? "Confirming..." : "Confirm"}
+            size="lg"
+            className="flex-1 cursor-pointer h-12"
+            onMouseEnter={() => setIsHoveredConfirm(true)}
+            onMouseLeave={() => setIsHoveredConfirm(false)}
+          >
+            <TextRoll
+              duration={0.2}
+              getEnterDelay={() => 0.1}
+              getExitDelay={() => 0.2}
+              transition={{ ease: "easeInOut" }}
+              hovered={isHoveredConfirm}
+            >
+              {loading ? "Confirming..." : "Confirm"}
+            </TextRoll>
           </Button>
         </div>
       </form>

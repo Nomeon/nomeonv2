@@ -1,23 +1,9 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { TextRoll } from "./ui/text-roll";
 import BookingWidget from "@/components/booking-calendar/booking-widget";
 import { motion } from "motion/react";
+import ContactForm from "./contact-form";
+
 
 export default function ContactSection() {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <div className="container mx-auto w-full">
       <div className="grid gap-16 2xl:grid-cols-2">
@@ -49,109 +35,7 @@ export default function ContactSection() {
             </h3>
           </motion.div>
 
-          <FieldSet className="space-y-4">
-            <motion.div
-              className="grid gap-4 lg:grid-cols-2"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Name</FieldLabel>
-                  <Input
-                    placeholder="Your name"
-                    className="rounded-none border-border"
-                  />
-                </Field>
-              </FieldGroup>
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Business Name</FieldLabel>
-                  <Input
-                    placeholder="Your business name"
-                    className="rounded-none border-border"
-                  />
-                </Field>
-              </FieldGroup>
-            </motion.div>
-
-            <motion.div
-              className="grid gap-4 lg:grid-cols-2"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Email</FieldLabel>
-                  <Input
-                    type="email"
-                    placeholder="you@example.com"
-                    className="rounded-none border-border"
-                  />
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Phone</FieldLabel>
-                  <Input
-                    type="tel"
-                    placeholder="+31 6 1234 5678"
-                    className="rounded-none border-border"
-                  />
-                </Field>
-              </FieldGroup>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Message</FieldLabel>
-                  <Textarea
-                    placeholder="Tell me a bit about your project or question…"
-                    className="min-h-[120px] resize-vertical rounded-none border-border"
-                  />
-                  <FieldDescription className="text-[11px] text-muted-foreground">
-                    A short description is enough; I&apos;ll reply personally.
-                  </FieldDescription>
-                </Field>
-              </FieldGroup>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Button
-                type="submit"
-                className="mt-2"
-                variant="default"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <TextRoll
-                  duration={0.2}
-                  getEnterDelay={() => 0.1}
-                  getExitDelay={() => 0.2}
-                  transition={{ ease: "easeInOut" }}
-                  hovered={isHovered}
-                >
-                  Send message
-                </TextRoll>
-              </Button>
-            </motion.div>
-          </FieldSet>
+          <ContactForm />
         </motion.div>
 
         {/* CAL.COM SLOT */}
