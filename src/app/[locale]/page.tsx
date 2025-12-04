@@ -11,11 +11,11 @@ import { IntroBackground } from "@/components/custom/intro-background";
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center justify-center gap-4">
-      <div className="w-full min-h-dvh relative">        
+      <div className="w-full min-h-dvh relative flex">        
         <IntroBackground />
         <section
           id="intro"
-          className="relative container mx-auto w-full py-24 lg:py-48 px-6 lg:px-12 h-full flex items-center justify-center overflow-hidden"
+          className="relative container mx-auto w-full px-6 lg:px-12 flex items-center justify-center overflow-hidden"
         >
           <IntroSection />
         </section>

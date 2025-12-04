@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function IntroBackground() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 overflow-hidden -z-10">
       {/* Subtle grid */}
       <div
         className={cn(

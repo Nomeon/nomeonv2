@@ -1,53 +1,49 @@
 "use client";
 
 import { motion } from "motion/react";
-
-const SERVICES = [
-  {
-    title: "Process & workflow mapping",
-    meta: "Analysis",
-    description:
-      "Turn messy, informal workflows into clear process maps that reveal bottlenecks, handovers, and automation opportunities.",
-    tags: ["BPMN", "Process design", "Discovery"],
-  },
-  {
-    title: "Custom internal tools",
-    meta: "Development",
-    description:
-      "Design and build lightweight tools that fit your team: from small utilities to full internal apps that replace spreadsheets.",
-    tags: ["Web apps", "Dashboards", "Automation"],
-  },
-  {
-    title: "System integration",
-    meta: "Integration",
-    description:
-      "Connect the tools you already use so data flows automatically instead of being copied around by hand.",
-    tags: ["APIs", "Sync", "Data pipelines"],
-  },
-  {
-    title: "Data modeling & reporting",
-    meta: "Data",
-    description:
-      "Structure your data so it can actually be used: consistent models, clean exports, and reports that answer real questions.",
-    tags: ["Modeling", "ETL", "Reporting"],
-  },
-  {
-    title: "Prototyping & technical discovery",
-    meta: "Exploration",
-    description:
-      "Validate ideas quickly with focused prototypes, so you know what’s worth investing in before committing to a big build.",
-    tags: ["Prototypes", "MVPs", "Tech choices"],
-  },
-  {
-    title: "Simulation & optimization",
-    meta: "Optimization",
-    description:
-      "Use simulations to explore different scenarios, spot constraints, and make better decisions about planning and capacity.",
-    tags: ["Simulation", "Planning", "What-if"],
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function ServicesSection() {
+  const t = useTranslations("ServicesSection");
+
+  const SERVICES = [
+    {
+      title: t("service1_title"),
+      meta: t("service1_meta"),
+      description: t("service1_description"),
+      tags: [t("service1_tag1"), t("service1_tag2"), t("service1_tag3")],
+    },
+    {
+      title: t("service2_title"),
+      meta: t("service2_meta"),
+      description: t("service2_description"),
+      tags: [t("service2_tag1"), t("service2_tag2"), t("service2_tag3")],
+    },
+    {
+      title: t("service3_title"),
+      meta: t("service3_meta"),
+      description: t("service3_description"),
+      tags: [t("service3_tag1"), t("service3_tag2"), t("service3_tag3")],
+    },
+    {
+      title: t("service4_title"),
+      meta: t("service4_meta"),
+      description: t("service4_description"),
+      tags: [t("service4_tag1"), t("service4_tag2"), t("service4_tag3")],
+    },
+    {
+      title: t("service5_title"),
+      meta: t("service5_meta"),
+      description: t("service5_description"),
+      tags: [t("service5_tag1"), t("service5_tag2"), t("service5_tag3")],
+    },
+    {
+      title: t("service6_title"),
+      meta: t("service6_meta"),
+      description: t("service6_description"),
+      tags: [t("service6_tag1"), t("service6_tag2"), t("service6_tag3")],
+    },
+  ];
 
   return (
     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

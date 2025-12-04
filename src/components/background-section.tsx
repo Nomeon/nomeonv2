@@ -1,15 +1,19 @@
+"use client";
+
 import SectionHeader from "./custom/section-header";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 export default function BackgroundSection() {
+  const t = useTranslations("BackgroundSection");
   return (
     <div className="container mx-auto w-full px-6 lg:px-12 relative flex flex-col gap-10">
       <SectionHeader
-        index="01"
-        meta="Background"
-        title="Profile"
-        subtitle="From Business & IT to practical, technical solutions"
-        description="I design and build tools that remove friction from real-world processes: translating business needs into clean, reliable software that people actually use."
+        index={"01"}
+        meta={t("header_meta")}
+        title={t("header_title")}
+        subtitle={t("header_subtitle")}
+        description={t("header_description")}
       />
 
       <div className="flex flex-col xl:flex-row w-full gap-16">
@@ -34,24 +38,18 @@ export default function BackgroundSection() {
             viewport={{ once: true }}
           >
             <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              Profile
+              {t("profile_label")}
             </span>
             <h2 className="font-baumans text-3xl md:text-4xl tracking-wide mb-4">
-              My Background
+              {t("profile_heading")}
             </h2>
 
             <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
               <p>
-                After graduating in Business &amp; IT at the University of
-                Twente, I found my groove: building and implementing smart,
-                pragmatic tools that actually improve how companies work. Less
-                chaos. Fewer manual steps. More breathing room for the people
-                who keep the business running.
+                {t("profile_paragraph1")}
               </p>
               <p>
-                I have a habit of picking apart messy processes, figuring out
-                where the friction lives, and replacing it with something clean,
-                automated, and reliable.
+                {t("profile_paragraph2")}
               </p>
             </div>
           </motion.div>
@@ -74,24 +72,18 @@ export default function BackgroundSection() {
             viewport={{ once: true }}
           >
             <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              Focus
+              {t("focus_label")}
             </span>
             <h3 className="font-baumans text-2xl tracking-wide mb-4">
-              Two Languages
+              {t("focus_heading")}
             </h3>
 
             <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
               <p>
-                In the landscape of Business &amp; IT, two worlds often clash:
-                the strategic voice of business and the technical dialect of
-                engineering. I sit squarely in the middle.
+                {t("focus_paragraph1")}
               </p>
               <p>
-                I translate business constraints into clear technical
-                requirements, and technical limitations back into realistic
-                business decisions. When off-the-shelf tools fall short, I
-                design and build the missing pieces myself: data pipelines,
-                simulations, workflow systems, and integration tooling.
+                {t("focus_paragraph2")}
               </p>
             </div>
           </motion.div>
@@ -107,14 +99,14 @@ export default function BackgroundSection() {
           <div className="flex items-baseline justify-between gap-4">
             <div>
               <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                Operator Profile
+                {t("operator_label")}
               </p>
               <h3 className="font-baumans text-2xl tracking-wide">
-                Stijn Nijhuis
+                {t("operator_name")}
               </h3>
             </div>
             <p className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground text-right">
-              Business &amp; IT • Builder
+              {t("operator_role")}
             </p>
           </div>
 
@@ -122,56 +114,50 @@ export default function BackgroundSection() {
           <div className="grid gap-4 text-[11px]">
             <div className="flex justify-between gap-4 border-b border-dashed border-border/60 pb-2">
               <span className="uppercase tracking-[0.22em] text-muted-foreground">
-                Focus
+                {t("operator_focus_label")}
               </span>
               <span className="text-right">
-                Process automation, manufacturing data,
-                <br className="hidden md:block" />
-                and hiring / matching tooling.
+                {t("operator_focus_value")}
               </span>
             </div>
 
             <div className="flex justify-between gap-4 border-b border-dashed border-border/60 pb-2">
               <span className="uppercase tracking-[0.22em] text-muted-foreground">
-                Currently building
+                {t("operator_currently_label")}
               </span>
               <span className="text-right">
-                KiwiConnect (matching platform),
-                <br className="hidden md:block" />
-                IFC / production tooling, internal dashboards.
+                {t("operator_currently_value")}
               </span>
             </div>
 
             <div className="flex justify-between gap-4 border-b border-dashed border-border/60 pb-2">
               <span className="uppercase tracking-[0.22em] text-muted-foreground">
-                Tooling
+                {t("operator_tooling_label")}
               </span>
               <span className="text-right">
-                Next.js · TypeScript · Python · PostgreSQL
-                <br className="hidden md:block" />
-                Arch Linux · Tauri · Exact Online / API work.
+                {t("operator_tooling_value")}
               </span>
             </div>
 
             <div className="flex justify-between gap-4 border-b border-dashed border-border/60 pb-2">
               <span className="uppercase tracking-[0.22em] text-muted-foreground">
-                Based in
+                {t("operator_based_label")}
               </span>
-              <span className="text-right">Gronau (DE) • Twente (NL)</span>
+              <span className="text-right">{t("operator_based_value")}</span>
             </div>
           </div>
 
           {/* Little personality row */}
           <div className="pt-2">
             <p className="text-[11px] uppercase tracking-[0.26em] text-muted-foreground mb-2">
-              Currently into
+              {t("operator_into_label")}
             </p>
             <div className="flex flex-wrap gap-2">
               {[
-                "LLM-powered tooling",
-                "Scheduling problems",
-                "Manufacturing data",
-                "Fair matching",
+                t("operator_tag1"),
+                t("operator_tag2"),
+                t("operator_tag3"),
+                t("operator_tag4"),
               ].map((tag) => (
                 <span
                   key={tag}
