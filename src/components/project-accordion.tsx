@@ -6,6 +6,7 @@ import {
 } from "@/components/animate-ui/components/base/accordion";
 import { TextRoll } from "./ui/text-roll";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 // Project data structure
 const projectsData = [
@@ -310,8 +311,16 @@ export default function ProjectAccordion() {
   return (
     <div className="w-full mx-auto">
       <Accordion multiple={false} defaultValue={["1"]} className="w-full">
-        {items.map((item) => (
-          <AccordionItemWithHover key={item.id} item={item} />
+        {items.map((item, index) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            <AccordionItemWithHover item={item} />
+          </motion.div>
         ))}
       </Accordion>
     </div>

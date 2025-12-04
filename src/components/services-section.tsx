@@ -50,15 +50,14 @@ const SERVICES = [
 export default function ServicesSection() {
 
   return (
-    <motion.div 
-      className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-      initial= {{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-    >
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {SERVICES.map((service, index) => (
         <motion.article
           key={service.title}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
           whileHover={{
             y: -2,
             x: -2,
@@ -109,6 +108,6 @@ export default function ServicesSection() {
           </div>
         </motion.article>
       ))}
-    </motion.div>
+    </div>
   );
 }

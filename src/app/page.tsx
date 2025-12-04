@@ -6,17 +6,20 @@ import BackgroundSection from "@/components/background-section";
 import IntroSection from "@/components/intro-section";
 import ContactSection from "@/components/contact-section";
 import ServicesSection from "@/components/services-section";
+import { IntroBackground } from "@/components/custom/intro-background";
 
 export default function Home() {
-
   return (
     <div className="w-full flex flex-col items-center justify-center gap-4">
-      <section
-        id="intro"
-        className="container mx-auto w-full py-24 lg:py-48 px-6 lg:px-12 min-h-dvh flex items-center justify-center"
-      >
-        <IntroSection />
-      </section>
+      <div className="w-full min-h-dvh relative">        
+        <IntroBackground />
+        <section
+          id="intro"
+          className="relative container mx-auto w-full py-24 lg:py-48 px-6 lg:px-12 h-full flex items-center justify-center overflow-hidden"
+        >
+          <IntroSection />
+        </section>
+      </div>
 
       <section
         id="about"
@@ -39,7 +42,7 @@ export default function Home() {
         <ProjectAccordion />
       </section>
 
-      <section 
+      <section
         id="services"
         className="container mx-auto w-full py-12 lg:py-20 flex flex-col gap-10 px-6 lg:px-12"
       >

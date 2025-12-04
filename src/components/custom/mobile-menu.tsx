@@ -105,132 +105,190 @@ export function MobileMenu() {
 
           {/* Content */}
           <div className="flex h-full flex-col gap-8 px-6 py-6 pt-6">
-            {/* Logo row */}
-            <div className="flex items-center justify-between">
-              <SheetClose asChild>
-                <Link
-                  href="/"
-                  className="flex items-center gap-3"
-                  onClick={handleNavigate}
-                >
-                  <div className="h-7 w-auto brightness-0 dark:invert">
-                    <Image
-                      src="/images/weblogo.svg"
-                      alt="Nomeon logo"
-                      width={110}
-                      height={32}
-                      className="h-7 w-auto"
-                    />
-                  </div>
-                </Link>
-              </SheetClose>
-            </div>
-
-            {/* Sections */}
-            <nav className="flex-1 pt-8">
-              <p className="mb-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                Sections
-              </p>
-              <ul className="space-y-4">
-                {sections.map((section) => (
-                  <li key={section.index}>
+            <AnimatePresence>
+              {open && (
+                <>
+                  {/* Logo row */}
+                  <motion.div
+                    className="flex items-center justify-between"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
                     <SheetClose asChild>
                       <Link
-                        href={section.href}
-                        onClick={handleNavigate}
-                        className="flex items-baseline justify-between gap-4 border-b border-dashed border-border/70 pb-2"
-                      >
-                        <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                          {section.index}
-                        </span>
-                        <span className="text-sm font-baumans tracking-[0.12em]">
-                          {section.label}
-                        </span>
-                      </Link>
-                    </SheetClose>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Socials */}
-            <div className="pt-4">
-              <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                Social
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {socials.map((item) => {
-                  const Icon = item.icon;
-                  const isExternal = item.href.startsWith("http");
-                  return (
-                    <SheetClose asChild key={item.label}>
-                      <Link
-                        href={item.href}
-                        target={isExternal ? "_blank" : undefined}
-                        rel={isExternal ? "noopener noreferrer" : undefined}
-                        className="flex items-center gap-2 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.22em]"
+                        href="/"
+                        className="flex items-center gap-3"
                         onClick={handleNavigate}
                       >
-                        <Icon className="h-3 w-3" />
-                        <span>{item.label}</span>
+                        <div className="h-7 w-auto brightness-0 dark:invert">
+                          <Image
+                            src="/images/weblogo.svg"
+                            alt="Nomeon logo"
+                            width={110}
+                            height={32}
+                            className="h-7 w-auto"
+                          />
+                        </div>
                       </Link>
                     </SheetClose>
-                  );
-                })}
-              </div>
-            </div>
+                  </motion.div>
 
-            {/* Theme + Language */}
-            <div className="pt-6">
-              <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                Display
-              </p>
+                  {/* Sections */}
+                  <nav className="flex-1 pt-8">
+                    <motion.p
+                      className="mb-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
+                    >
+                      Sections
+                    </motion.p>
+                    <ul className="space-y-4">
+                      {sections.map((section, index) => (
+                        <motion.li
+                          key={section.index}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 20 }}
+                          transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 + (index * 0.08) }}
+                        >
+                          <SheetClose asChild>
+                            <Link
+                              href={section.href}
+                              onClick={handleNavigate}
+                              className="flex items-baseline justify-between gap-4 border-b border-dashed border-border/70 pb-2"
+                            >
+                              <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                                {section.index}
+                              </span>
+                              <span className="text-sm font-baumans tracking-[0.12em]">
+                                {section.label}
+                              </span>
+                            </Link>
+                          </SheetClose>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </nav>
 
-              <Button
-                onClick={() =>
-                  setTheme(resolvedTheme === "light" ? "dark" : "light")
-                }
-                className="w-full flex justify-between"
-              >
-                <span>Theme</span>
-                <div className="flex items-center gap-2">
-                  <Sun className="h-4 w-4 dark:hidden" />
-                  <Moon className="h-4 w-4 hidden dark:block" />
-                  <span className="tabular-nums">
-                    {resolvedTheme === "light" ? "Light" : "Dark"}
-                  </span>
-                </div>
-              </Button>
+                  {/* Socials */}
+                  <div className="pt-4">
+                    <motion.p
+                      className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
+                    >
+                      Social
+                    </motion.p>
+                    <div className="grid grid-cols-2 gap-4">
+                      {socials.map((item, index) => {
+                        const Icon = item.icon;
+                        const isExternal = item.href.startsWith("http");
+                        return (
+                          <motion.div
+                            key={item.label}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 + (index * 0.05) }}
+                          >
+                            <SheetClose asChild>
+                              <Link
+                                href={item.href}
+                                target={isExternal ? "_blank" : undefined}
+                                rel={isExternal ? "noopener noreferrer" : undefined}
+                                className="flex items-center gap-2 border border-border px-2 py-1 text-[10px] uppercase tracking-[0.22em]"
+                                onClick={handleNavigate}
+                              >
+                                <Icon className="h-3 w-3" />
+                                <span>{item.label}</span>
+                              </Link>
+                            </SheetClose>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-              <Button
-                onClick={() =>
-                  setTheme(resolvedTheme === "light" ? "dark" : "light")
-                }
-                className="w-full flex justify-between mt-4"
-              >
-                <span>Language</span>
-                <div className="flex items-center gap-2">
-                  <Image
-                    className="h-4 w-4 mb-1"
-                    width={16}
-                    height={16}
-                    alt={
-                      resolvedTheme === "light"
-                        ? "Nederlandse vlag"
-                        : "English flag"
-                    }
-                    src={
-                      resolvedTheme === "light"
-                        ? "/images/nl.svg"
-                        : "/images/en.svg"
-                    }
-                  />
-                  <span className="tabular-nums">
-                    {resolvedTheme === "light" ? "Nederlands" : "English"}
-                  </span>
-                </div>
-              </Button>
-            </div>
+                  {/* Theme + Language */}
+                  <div className="pt-6">
+                    <motion.p
+                      className="mb-3 text-[11px] uppercase tracking-[0.3em] text-muted-foreground"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.9 }}
+                    >
+                      Display
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 1.0 }}
+                    >
+                      <Button
+                        onClick={() =>
+                          setTheme(resolvedTheme === "light" ? "dark" : "light")
+                        }
+                        className="w-full flex justify-between"
+                      >
+                        <span>Theme</span>
+                        <div className="flex items-center gap-2">
+                          <Sun className="h-4 w-4 dark:hidden" />
+                          <Moon className="h-4 w-4 hidden dark:block" />
+                          <span className="tabular-nums">
+                            {resolvedTheme === "light" ? "Light" : "Dark"}
+                          </span>
+                        </div>
+                      </Button>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 1.05 }}
+                    >
+                      <Button
+                        onClick={() =>
+                          setTheme(resolvedTheme === "light" ? "dark" : "light")
+                        }
+                        className="w-full flex justify-between mt-4"
+                      >
+                        <span>Language</span>
+                        <div className="flex items-center gap-2">
+                          <Image
+                            className="h-4 w-4 mb-1"
+                            width={16}
+                            height={16}
+                            alt={
+                              resolvedTheme === "light"
+                                ? "Nederlandse vlag"
+                                : "English flag"
+                            }
+                            src={
+                              resolvedTheme === "light"
+                                ? "/images/nl.svg"
+                                : "/images/en.svg"
+                            }
+                          />
+                          <span className="tabular-nums">
+                            {resolvedTheme === "light" ? "Nederlands" : "English"}
+                          </span>
+                        </div>
+                      </Button>
+                    </motion.div>
+                  </div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </SheetContent>
